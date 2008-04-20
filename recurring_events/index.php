@@ -24,7 +24,7 @@ if ($_POST['body'] != '')
   <body>
     <h1>Recurring Events</h1>
     <p>
-      4/19/2008
+      Dan Barry (<a href="http://bakineggs.com">bakineggs</a>) - 4/19/2008
     </p>
     <p>
       I recently had to write some SQL queries to find upcoming events in the calendar part of a project I'm working on.
@@ -52,7 +52,7 @@ if ($_POST['body'] != '')
       <li><a href="recurring_events_for.sql">recurring_events_for.sql</a></li>
     </ul>
     <p>
-      Note: This only works on PostgreSQL with PL/pgSQL installed.
+      Note: This only works on PostgreSQL with <a href="http://www.postgresql.org/docs/8.3/static/plpgsql.html">PL/pgSQL</a> installed.
     </p>
     <h2>Stuff I Say About the Code</h2>
     <p>
