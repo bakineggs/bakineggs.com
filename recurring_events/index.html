@@ -9,8 +9,9 @@
     <p>
       I recently had to write some SQL queries to find upcoming events in the calendar part of a project I'm working on.
       After struggling for a few days with a giant where clause that confused me every time I saw it, one of my coworkers pointed me to <a href="http://www.justatheory.com/computers/databases/postgresql/recurring_events.html">a great post on David Wheeler's blog</a>.
-      He wrote functons that did almost exactly what I needed.
-      He already did a great job explaining what these functions do, so my incoherent ramblings will only be about the changes I made.
+      He wrote a functon that does almost exactly what I need.
+      <code>select * from recurring_events_for('2008-04-19', '2008-05-19');</code> returns all events occuring in that time span.
+      He already did a great job explaining what his function does, so my incoherent ramblings will only be about the changes I've made.
     </p>
     <h2>Disclaimer</h2>
     <p>
@@ -30,9 +31,12 @@
       <li><a href="generate_recurrences.sql">generate_recurrences.sql</a></li>
       <li><a href="recurring_events_for.sql">recurring_events_for.sql</a></li>
     </ul>
+    <p>
+      Note: This only works on PostgreSQL with PL/pgSQL installed.
+    </p>
     <h2>Stuff I Say About the Code</h2>
     <p>
-      David's original functions were great for basic recurring events, but lacked some recurrence types I needed:
+      David's original function was great for basic recurring events, but lacked some recurrence types I needed:
     </p>
     <ul>
       <li>yearly recurring events (very easy to add to his code)</li>
@@ -53,7 +57,7 @@
     </ul>
     <h3>All Day vs. Time Span</h3>
     <p>
-      I was thinking of having all day events just start and midnight and end at 11:59pm, but I was scared that users viewing the event in different time zones might see it across two days.
+      I was thinking of having all day events just start at midnight and end at 11:59pm, but I was scared that users viewing the event in different time zones might see it across two days.
       I think the new timezone magic in Rails should take care of this, but I'm not sure.
       If it does, the events.date column can go bye-bye.
     </p>
@@ -147,9 +151,9 @@ BEGIN
 END;
 $BODY$;</pre>
     <p>
-      I extracted this into its own function because I needed the data in both generate_recurrences() and recurring_events_for().
-      I ended up only calling this once per iteration and the return value in a variable, but I left it in a separate function anyways.
-      I get confused and scared when there is too much code in one function.
+      This function returns the interval to use when calculating the date of the next recurrence in a series.
+      monthly_by_week_dow and yearly_by_week_dow return the closest value to a month and a year that are multiples of 7.
+      If you add 364 days to January 1st, you're still in the same year, so we have to later account for the fact that these values are less than a month and year, respectively.
     </p>
     <h3>intervals_between()</h3>
     <pre>CREATE OR REPLACE FUNCTION  intervals_between(
@@ -181,7 +185,7 @@ BEGIN
 END
 $BODY$;</pre>
     <p>
-      David's original functions generated every recurrence since the original date of the event and disregarded the ones before the start of the range.
+      David's original function generated every recurrence after the original date of the event and disregarded the ones before the start of the range.
       That is fine for ranges in the near future, but for events far away it becomes very taxing.
       If I have an event that recurs daily and originally started a year ago, there are 365 dates generated that are discarded.
       With a lot of events that started recurring a long time ago, this could add up.
@@ -245,7 +249,7 @@ BEGIN
 END;
 $BODY$;</pre>
     <p>
-      Instead of checking the recurrence type and then running the same while loop in every are except one-time events, I get the interval from interval_for() and just run the while loop.
+      Instead of checking the recurrence type and then running the same while loop for every type except one-time events, I get the interval from interval_for() and just run the while loop.
       Since recurring_events_for() never calls this function for one-time events, I don't have to worry about those.
       All of the original functionality from David's function, refactored as stated above, is in the "else" section at the end of the function.
     </p>
@@ -455,7 +459,7 @@ $BODY$;</pre>
     </p>
     <p>
       The function starts out by returning any one-time events and continuing to the next row.
-      If only the rest was that simple...
+      If only the rest were that simple...
     </p>
     <p>
       The next chunk takes either date or starts_at and ends_at and makes start_date and end_date so that we won't have to worry about whether this is an all day or time span event.
