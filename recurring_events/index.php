@@ -82,16 +82,8 @@ if ($_POST['body'] != '')
       If it does, the events.date column can go bye-bye.
     </p>
     <h3>The Tables</h3>
+    <pre><?= h(file_get_contents('events.sql')) ?></pre>
     <h4>events</h4>
-    <pre>CREATE TABLE events (
-  id integer NOT NULL,
-  date date,
-  starts_at timestamp without time zone,
-  ends_at timestamp without time zone,
-  frequency character varying(255),
-  count integer,
-  "until" date
-);</pre>
     <p>
       This table should either have the date column or the starts_at and ends_at columns set, but not both.
       See "All Day vs. Time Span" above.
@@ -108,13 +100,6 @@ if ($_POST['body'] != '')
       One could theoretically reduce this down to one column and calculate the value if given the other type, but then you have no way of knowing what the user originally specified when presenting the data back to them in an edit screen.
     </p>
     <h4>event_recurrences</h4>
-    <pre>CREATE TABLE event_recurrences (
-  id integer NOT NULL,
-  event_id integer,
-  "month" integer,
-  "day" integer,
-  week integer
-);</pre>
     <p>
       This table specifies additional rules for how events recur.
       An event can have multiple rows in this table to specify multiple rules.
@@ -135,75 +120,20 @@ if ($_POST['body'] != '')
       If the week column is not null, it specifies the week of the month (2 would be the 2nd week, -2 would be the 2nd to last week), and the day column specifies the day of the week.
     </p>
     <h4>event_cancellations</h4>
-    <pre>CREATE TABLE event_cancellations (
-  id integer NOT NULL,
-  event_id integer,
-  date date
-);</pre>
     <p>
       This table stores the start dates of the recurrences of events that should be cancelled.
       If you change something that affects the recurrence schedule of an event, any cancellations will not take effect for that recurrence (unless another recurrence would happen on that same day).
       One could theoretically account for this by offsetting any cancellations when a schedule is changed, but I couldn't figure out a good set of rules for how to do this.
     </p>
     <h3>interval_for()</h3>
-    <pre>CREATE OR REPLACE FUNCTION  interval_for(
-  recurs TEXT
-)
-  RETURNS INTERVAL
-  LANGUAGE plpgsql IMMUTABLE
-  AS $BODY$
-BEGIN
-  IF recurs = 'daily' THEN
-    RETURN '1 day'::interval;
-  ELSIF recurs = 'weekly' THEN
-    RETURN '7 days'::interval;
-  ELSIF recurs = 'monthly' THEN
-    RETURN '1 month'::interval;
-  ELSIF recurs = 'yearly' THEN
-    RETURN '1 year'::interval;
-  ELSIF recurs = 'monthly_by_week_dow' THEN
-    RETURN '28 days'::interval;
-  ELSIF recurs = 'yearly_by_week_dow' THEN
-    RETURN '364 days'::interval;
-  ELSE
-    RAISE EXCEPTION 'Recurrence % not supported by generate_recurrences()', recurs;
-  END IF;
-END;
-$BODY$;</pre>
+    <pre><?= h(file_get_contents('interval_for.sql')) ?></pre>
     <p>
       This function returns the interval to use when calculating the date of the next recurrence in a series.
       monthly_by_week_dow and yearly_by_week_dow return the closest value to a month and a year that are multiples of 7.
       If you add 364 days to January 1st, you're still in the same year, so we have to later account for the fact that these values are less than a month and year, respectively.
     </p>
     <h3>intervals_between()</h3>
-    <pre>CREATE OR REPLACE FUNCTION  intervals_between(
-  start_date DATE,
-  end_date DATE,
-  duration INTERVAL
-)
-  RETURNS FLOAT
-  LANGUAGE plpgsql IMMUTABLE
-  AS $BODY$
-DECLARE
-  count FLOAT := 0;
-  multiplier INT := 512;
-BEGIN
-  IF start_date > end_date THEN
-    RETURN 0;
-  END IF;
-  LOOP
-    WHILE start_date + (count + multiplier) * duration < end_date LOOP
-      count := count + multiplier;
-    END LOOP;
-    EXIT WHEN multiplier = 1;
-    multiplier := multiplier / 2;
-  END LOOP;
-
-  -- calculate the remainder
-  count := count + (extract(epoch from end_date) - extract(epoch from (start_date + count * duration))) / (extract(epoch from end_date + duration) - extract(epoch from end_date))::int;
-  RETURN count;
-END
-$BODY$;</pre>
+    <pre><?= h(file_get_contents('intervals_between.sql')) ?></pre>
     <p>
       David's original function generated every recurrence after the original date of the event and disregarded the ones before the start of the range.
       That is fine for ranges in the near future, but for events far away it becomes very taxing.
@@ -225,49 +155,7 @@ $BODY$;</pre>
       For dates that are 365 days apart, though, the multipler reduces the iterations from 365 down to 15.
     </p>
     <h3>generate_recurrences()</h3>
-    <pre>CREATE OR REPLACE FUNCTION  generate_recurrences(
-  pattern_type TEXT,
-  duration INTERVAL,
-  original_date DATE,
-  range_start DATE,
-  range_end DATE
-)
-  RETURNS setof DATE
-  LANGUAGE plpgsql IMMUTABLE
-  AS $BODY$
-DECLARE
-  next_date DATE;
-BEGIN
-  next_date := original_date + duration * (CEIL(intervals_between(original_date, range_start, duration))-1);
-  IF pattern_type = 'positive_week_dow' OR pattern_type = 'negative_week_dow' THEN
-    LOOP
-      next_date := next_date + duration;
-      IF duration = '364 days'::interval THEN
-        next_date := next_date + ABS(extract(month from next_date) - extract(month from original_date)) * '28 days'::interval;
-      END IF;
-      IF pattern_type = 'positive_week_dow' THEN
-        next_date := next_date
-          + (CEIL(extract(day from original_date) / 7)
-            - CEIL(extract(day from next_date) / 7))
-          * '7 days'::interval;
-      ELSE
-        next_date := next_date
-          + (FLOOR((extract(day from original_date + '1 month'::interval - original_date) - extract(day from original_date)) / 7)
-            - FLOOR((extract(day from next_date + '1 month'::interval - next_date) - extract(day from next_date)) / 7))
-          * '7 days'::interval;
-      END IF;
-      EXIT WHEN next_date > range_end;
-      RETURN NEXT next_date;
-    END LOOP;
-  ELSE
-    LOOP
-      next_date := next_date + duration;
-      EXIT WHEN next_date > range_end;
-      RETURN NEXT next_date;
-    END LOOP;
-  END IF;
-END;
-$BODY$;</pre>
+    <pre><?= h(file_get_contents('generate_recurrences.sql')) ?></pre>
     <p>
       Instead of checking the recurrence type and then running the same while loop for every type except one-time events, I get the interval from interval_for() and just run the while loop.
       Since recurring_events_for() never calls this function for one-time events, I don't have to worry about those.
@@ -280,198 +168,7 @@ $BODY$;</pre>
       Staring at a calendar for a while and figuring out the algorithms would be easier than reading an explanation I wrote.
     </p>
     <h3>recurring_events_for()</h3>
-    <pre>CREATE OR REPLACE FUNCTION recurring_events_for(
-  range_start TIMESTAMP,
-  range_end  TIMESTAMP
-)
-  RETURNS SETOF events
-  LANGUAGE plpgsql STABLE
-  AS $BODY$
-DECLARE
-  row record;
-  event events;
-  cancelled INT;
-  original_date DATE;
-  start_date TIMESTAMP;
-  start_time TEXT;
-  end_date TIMESTAMP;
-  next_date DATE;
-  recurs TEXT;
-  pattern_type TEXT;
-  recurrences_end TIMESTAMP;
-  offset INTERVAL;
-  duration INTERVAL;
-BEGIN
-  FOR row IN
-    SELECT events.*, event_recurrences.day, event_recurrences.month, event_recurrences.week
-      FROM events
-      LEFT JOIN event_recurrences on event_recurrences.event_id = events.id
-      WHERE
-        frequency <> 'once' OR
-        (frequency = 'once' AND
-          ((date <= range_end::date AND date >= range_start::date) OR
-          (starts_at <= range_end AND ends_at >= range_start)))
-    LOOP
-      event := row;
-
-      IF event.frequency = 'once' THEN
-        RETURN NEXT event;
-        CONTINUE;
-      END IF;
-
-      IF event.date IS NOT NULL THEN
-        start_date := event.date + interval '0 hours';
-        end_date := event.date + interval '23:59:59';
-      ELSE
-        start_date := event.starts_at;
-        end_date := event.ends_at;
-      END IF;
-      start_time := start_date::time::text;
-      original_date := start_date::date;
-
-      IF start_date <= range_end AND end_date >= range_start THEN
-        SELECT COUNT(1) INTO cancelled
-          FROM event_cancellations
-          WHERE event_id = event.id
-            AND date = start_date::date;
-        IF cancelled = 0 THEN
-          RETURN NEXT event;
-        END IF;
-      END IF;
-
-      recurs := event.frequency;
-      pattern_type := 'normal';
-      offset := '00:00:00'::interval;
-
-      IF recurs = 'weekly' AND row.day IS NOT NULL THEN
-        offset := offset + (((row.day-cast(extract(dow from start_date) as int))%7)||' days')::interval;
-
-      ELSIF recurs = 'monthly' AND row.week IS NOT NULL AND row.day IS NOT NULL THEN
-        offset := offset + (((row.day-cast(extract(dow from start_date) as int))%7)||' days')::interval;
-
-        -- adjusting the day of week could have put us in a different month
-        IF extract(month from start_date+offset) < row.month OR (row.month = 1 AND extract(month from start_date+offset) = 12) THEN
-          offset := offset + '7 days'::interval;
-        ELSIF extract(month from start_date+offset) > row.month OR (row.month = 12 AND extract(month from start_date+offset) = 1) THEN
-          offset := offset - '7 days'::interval;
-        END IF;
-
-        recurs := 'monthly_by_week_dow';
-        offset := offset - '28 days'::interval;
-        IF row.week > 0 THEN
-          pattern_type := 'positive_week_dow';
-          WHILE offset < 0 LOOP
-            offset := offset + '28 days'::interval;
-            offset := offset + (row.week - CEIL(extract(day from start_date + offset)/7)) * '7 days'::interval;
-          END LOOP;
-        ELSE
-          pattern_type := 'negative_week_dow';
-          WHILE offset < 0 LOOP
-            offset := offset + '28 days'::interval;
-            offset := offset +
-              (row.week + FLOOR(
-                (extract(day from start_date + offset + '1 month'::interval - (start_date + offset))
-                  - extract(day from start_date + offset)) / 7) + 1)
-              * '7 days'::interval;
-          END LOOP;
-        END IF;
-
-      ELSIF recurs = 'monthly' AND row.day IS NOT NULL THEN
-        offset := offset + ((row.day-cast(extract(day from start_date) as int))||' days')::interval;
-
-      ELSIF recurs = 'yearly' AND row.week IS NOT NULL AND row.day IS NOT NULL THEN
-        IF row.month IS NULL THEN
-          row.month = extract(month from start_date);
-        END IF;
-        offset := offset + ((row.month-cast(extract(month from start_date) as int))||' months')::interval;
-        offset := offset + (((row.day-cast(extract(dow from start_date+offset) as int))%7)||' days')::interval;
-
-        -- adjusting the day of week could have put us in a different month
-        IF extract(month from start_date+offset) < row.month OR (row.month = 1 AND extract(month from start_date+offset) = 12) THEN
-          offset := offset + '7 days'::interval;
-        ELSIF extract(month from start_date+offset) > row.month OR (row.month = 12 AND extract(month from start_date+offset) = 1) THEN
-          offset := offset - '7 days'::interval;
-        END IF;
-
-        recurs := 'yearly_by_week_dow';
-        offset := offset - '364 days'::interval;
-        IF row.week > 0 THEN
-          pattern_type := 'positive_week_dow';
-          WHILE start_date+offset < start_date LOOP
-            offset := offset + '364 days'::interval;
-            IF extract(month from start_date+offset) != row.month THEN
-              offset := offset + '7 days'::interval;
-            END IF;
-            offset := offset + (row.week - CEIL(extract(day from start_date + offset)/7)) * '7 days'::interval;
-          END LOOP;
-        ELSE
-          pattern_type := 'negative_week_dow';
-          WHILE start_date+offset < start_date LOOP
-            offset := offset + '364 days'::interval;
-            IF extract(month from start_date+offset) != row.month THEN
-              offset := offset + '7 days'::interval;
-            END IF;
-            offset := offset +
-              (FLOOR(
-                (extract(day from start_date + offset + '1 month'::interval - (start_date + offset))
-                  - extract(day from start_date + offset)) / 7) - 1 - row.week)
-              * '7 days'::interval;
-          END LOOP;
-        END IF;
-
-      ELSIF recurs = 'yearly' AND row.month IS NOT NULL OR row.day IS NOT NULL THEN
-        IF row.month IS NOT NULL THEN
-          offset := offset + ((row.month-cast(extract(month from start_date) as int))||' months')::interval;
-        END IF;
-        IF row.day IS NOT NULL THEN
-          offset := offset + ((row.day-cast(extract(day from start_date) as int))||' days')::interval;
-        END IF;
-      END IF;
-
-      duration := interval_for(recurs);
-      WHILE offset < 0 LOOP
-        offset := offset + duration;
-      END LOOP;
-      start_date := start_date + offset;
-      end_date := end_date + offset;
-
-      IF event.until IS NOT NULL AND event.until < range_end THEN
-        recurrences_end = event.until;
-      ELSIF event.count IS NOT NULL AND start_date+(event.count-1)*duration < range_end THEN
-        recurrences_end = start_date+(event.count-1)*duration;
-      ELSE
-        recurrences_end = range_end;
-      END IF;
-
-      FOR next_date IN
-        SELECT *
-          FROM generate_recurrences(
-            pattern_type,
-            duration,
-            start_date::date,
-            range_start::date,
-            recurrences_end::date
-          )
-      LOOP
-        CONTINUE WHEN next_date = original_date;
-        SELECT COUNT(1) INTO cancelled
-          FROM event_cancellations
-          WHERE event_id = event.id
-            AND date = next_date::date;
-        CONTINUE WHEN cancelled > 0;
-        IF event.date IS NOT NULL THEN
-          event.date := next_date;
-        ELSE
-          event.starts_at := (next_date || ' ' || start_time)::timestamp;
-          event.ends_at := event.starts_at+(end_date-start_date);
-          CONTINUE WHEN event.ends_at < range_start;
-        END IF;
-        RETURN NEXT event;
-      END LOOP;
-    END LOOP;
-  RETURN;
-END;
-$BODY$;</pre>
+    <pre><?= h(file_get_contents('recurring_events_for.sql')) ?></pre>
     <p>
       This is the main function for finding events in a certain range.
       It starts out by selecting one-time events inside of the range and all repeating events, left joining our recurrence rules from the event_recurrences table.
