@@ -237,41 +237,54 @@ if (mysql_num_rows($comments) == 0) {
 <?php
 }
 while ($comment = mysql_fetch_assoc($comments)) { ?>
-    <p>
+    <h3>
+      At <?= date('g:ia', strtotime($comment['timestamp'])) ?> UTC on <?= date('l, F j, Y', strtotime($comment['timestamp'])) ?>,
 <?php
 if ($comment['name']) {
   if ($comment['email']) {
 ?>
-      <strong><a href="mailto:<?= h($comment['email']) ?>"><?= h($comment['name']) ?></a></strong>
+      <a href="mailto:<?= h($comment['email']) ?>"><?= h($comment['name']) ?></a>
 <?php
     if ($comment['url']) {
 ?>
-      <strong>(<a href="<?= h($comment['url']) ?>"><?= h($comment['url']) ?></a>)</strong>
+      (<a href="<?= h($comment['url']) ?>"><?= h($comment['url']) ?></a>)
 <?php
     }
   } else if ($comment['url']) {
 ?>
-      <strong><a href="<?= h($comment['url']) ?>"><?= h($comment['name']) ?></a></strong>
+      <a href="<?= h($comment['url']) ?>"><?= h($comment['name']) ?></a>
 <?php
   } else {
 ?>
-      <strong><?= h($comment['name']) ?></strong>
+      <?= h($comment['name']) ?>
 <?php
   }
 } else if ($comment['email'] || $comment['url']) {
   if ($comment['email']) {
 ?>
-      <strong><a href="mailto:<?= h($comment['email']) ?>"><?= h($comment['email']) ?></a></strong>
+      <a href="mailto:<?= h($comment['email']) ?>"><?= h($comment['email']) ?></a>
+<?php
+  } else {
+?>
+      <em>Anonymous</em>
 <?php
   }
   if ($comment['url']) {
 ?>
-      <strong><a href="<?= h($comment['url']) ?>"><?= h($comment['url']) ?></a></strong>
+      (<a href="<?= h($comment['url']) ?>"><?= h($comment['url']) ?></a>)
 <?php
   }
 }
+else
+{
 ?>
-      <br /><br />
+      <em>Anonymous</em>
+<?php
+}
+?>
+      said:
+    </h3>
+    <p>
       <?= h($comment['body']) ?>
     </p>
 <?php } ?>
