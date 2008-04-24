@@ -288,7 +288,7 @@ else
       said:
     </h3>
     <p>
-      <?= h($comment['body']) ?>
+      <?= nl2br(h($comment['body'])) ?>
     </p>
 <?php } ?>
   </body>
