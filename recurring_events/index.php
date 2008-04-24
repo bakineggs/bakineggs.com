@@ -44,6 +44,9 @@ if ($_POST['body'] != '')
       I don't blame you.
       I would too.
     </p>
+    <p>
+      Revision history and any updates are available on <a href="http://github.com/danbarry/recurring_events_for">the github page for this function</a>.
+    </p>
     <ul>
       <li><a href="events.sql">events.sql</a></li>
       <li><a href="interval_for.sql">interval_for.sql</a></li>
