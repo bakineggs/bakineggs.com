@@ -138,7 +138,7 @@ if ($_POST['body'] != '')
     <h3>intervals_between()</h3>
     <pre><?= h(file_get_contents('intervals_between.sql')) ?></pre>
     <p>
-      David's original function generated every recurrence after the original date of the event and disregarded the ones before the start of the range.
+      David's original recurring_events_for() called generate_recurrences() to generate every recurrence after the original date of the event and disregarded the ones before the start of the range.
       That is fine for ranges in the near future, but for events far away it becomes very taxing.
       If I have an event that recurs daily and originally started a year ago, there are 365 dates generated that are discarded.
       With a lot of events that started recurring a long time ago, this could add up.
