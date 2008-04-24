@@ -31,11 +31,7 @@ if ($_POST['body'] != '')
       After struggling for a few days with a giant where clause that confused me every time I saw it, one of my coworkers pointed me to <a href="http://www.justatheory.com/computers/databases/postgresql/recurring_events.html">a great post on David Wheeler's blog</a>.
       He wrote a functon that does almost exactly what I need.
       <code>select * from recurring_events_for('2008-04-19', '2008-05-19');</code> returns all events occuring in that time span.
-      He already did a great job explaining what his function does, so my incoherent ramblings will only be about the changes I've made.
-    </p>
-    <h2>Disclaimer</h2>
-    <p>
-      I'm dumb. Reading what I wrote could make you dumb as well.
+      He already did a great job explaining what his function does, so I'll only write about the changes I've made.
     </p>
     <h2>Code</h2>
     <p>
@@ -126,7 +122,7 @@ if ($_POST['body'] != '')
     <p>
       This table stores the start dates of the recurrences of events that should be cancelled.
       If you change something that affects the recurrence schedule of an event, any cancellations will not take effect for that recurrence (unless another recurrence would happen on that same day).
-      One could theoretically account for this by offsetting any cancellations when a schedule is changed, but I couldn't figure out a good set of rules for how to do this.
+      One could theoretically account for this by offsetting any cancellations when a schedule is changed, but I couldn't figure out a good set of rules for the situations in which to do this.
     </p>
     <h3>interval_for()</h3>
     <pre><?= h(file_get_contents('interval_for.sql')) ?></pre>
@@ -165,7 +161,7 @@ if ($_POST['body'] != '')
       All of the original functionality from David's function, refactored as stated above, is in the "else" section at the end of the function.
     </p>
     <p>
-      The big ugly chunk of code for positive_week_dow and negative_week_dow generates dates for events that recur on certain days of the week in certain weeks of the month.
+      The chunk of code for positive_week_dow and negative_week_dow generates dates for events that recur on certain days of the week in certain weeks of the month.
       It does this by adjusting to the correct year and/or month using values close to a year or month that are multiples of 7 (28 and 364) to maintain the day of week, then adjusting the week in the month by adding or removing weeks.
       I'm not too good at explaining things, so I won't even try to articulate what the ceil() and floor() crap does.
       Staring at a calendar for a while and figuring out the algorithms would be easier than reading an explanation I wrote.
@@ -190,8 +186,8 @@ if ($_POST['body'] != '')
       Even if the original date doesn't follow the recurrence rules, it should still be returned (business logic...if you diagree, remove this chunk).
     </p>
     <p>
-      After that, there is a terrifying series of if/elsif statements to figure out an offset that adjusts the start_date to the first date that matches the recurrence rules.
-      Offset is then adjusted to be greater than 0 (in case the application of a rule pushed us in front of the original date) and is added to start_date and end_date to give us the first date of the series.
+      After that, there is a series of if/elsif statements to figure out an offset that adjusts the start_date to the first date that matches the recurrence rules.
+      Offset is then adjusted to be greater than 0 (in case the application of a rule put us before the original date) and is added to start_date and end_date to give us the first date of the series.
       If this is just a basic recurring event (no rows in event_recurrences for it), none of rules get applied, so offset is 0 and start_date will be unchanged.
     </p>
     <p>
