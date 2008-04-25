@@ -163,8 +163,7 @@ if ($_POST['body'] != '')
     <p>
       The chunk of code for positive_week_dow and negative_week_dow generates dates for events that recur on certain days of the week in certain weeks of the month.
       It does this by adjusting to the correct year and/or month using values close to a year or month that are multiples of 7 (28 and 364) to maintain the day of week, then adjusting the week in the month by adding or removing weeks.
-      I'm not too good at explaining things, so I won't even try to articulate what the ceil() and floor() crap does.
-      Staring at a calendar for a while and figuring out the algorithms would be easier than reading an explanation I wrote.
+      The adjustment of weeks is determined by comparing the day of the month to the start or end day of the month to determine the week of the month, then comparing that to the week of month of the repeat setting.
     </p>
     <h3>recurring_events_for()</h3>
     <pre><?= h(file_get_contents('recurring_events_for.sql')) ?></pre>
