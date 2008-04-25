@@ -41,7 +41,7 @@ if ($_POST['body'] != '')
       I would too.
     </p>
     <p>
-      Revision history and any updates are available on <a href="http://github.com/danbarry/recurring_events_for">the github page for this function</a>.
+      Revision history, specs, and updates are available on <a href="http://github.com/danbarry/recurring_events_for">the github page for this function</a>.
     </p>
     <ul>
       <li><a href="events.sql">events.sql</a></li>
