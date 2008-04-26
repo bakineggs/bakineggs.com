@@ -1,6 +1,7 @@
 CREATE OR REPLACE FUNCTION recurring_events_for(
   range_start TIMESTAMP,
-  range_end  TIMESTAMP
+  range_end  TIMESTAMP,
+  tz_offset INTERVAL
 )
   RETURNS SETOF events
   LANGUAGE plpgsql STABLE
@@ -28,11 +29,15 @@ BEGIN
         frequency <> 'once' OR
         (frequency = 'once' AND
           ((date <= range_end::date AND date >= range_start::date) OR
-          (starts_at <= range_end AND ends_at >= range_start)))
+          (starts_at + tz_offset <= range_end AND ends_at + tz_offset >= range_start)))
     LOOP
       event := row;
 
       IF event.frequency = 'once' THEN
+        IF event.starts_at IS NOT NULL AND event.ends_at IS NOT NULL THEN
+          event.starts_at := event.starts_at + tz_offset;
+          event.ends_at := event.ends_at + tz_offset;
+        END IF;
         RETURN NEXT event;
         CONTINUE;
       END IF;
@@ -41,8 +46,8 @@ BEGIN
         start_date := event.date + interval '0 hours';
         end_date := event.date + interval '23:59:59';
       ELSE
-        start_date := event.starts_at;
-        end_date := event.ends_at;
+        start_date := event.starts_at + tz_offset;
+        end_date := event.ends_at + tz_offset;
       END IF;
       start_time := start_date::time::text;
       original_date := start_date::date;
@@ -68,10 +73,12 @@ BEGIN
         offset := offset + (((row.day-cast(extract(dow from start_date) as int))%7)||' days')::interval;
 
         -- adjusting the day of week could have put us in a different month
-        IF extract(month from start_date+offset) < row.month OR (row.month = 1 AND extract(month from start_date+offset) = 12) THEN
-          offset := offset + '7 days'::interval;
-        ELSIF extract(month from start_date+offset) > row.month OR (row.month = 12 AND extract(month from start_date+offset) = 1) THEN
-          offset := offset - '7 days'::interval;
+        IF extract(month from start_date) != extract(month from start_date + offset) THEN
+          IF cast(extract(month from start_date) - extract(month from start_date + offset) as int) % 12 = 1 THEN
+            offset := offset + '7 days'::interval;
+          ELSE
+            offset := offset - '7 days'::interval;
+          END IF;
         END IF;
 
         recurs := 'monthly_by_week_dow';
@@ -86,10 +93,9 @@ BEGIN
           pattern_type := 'negative_week_dow';
           WHILE offset < 0 LOOP
             offset := offset + '28 days'::interval;
-            offset := offset +
-              (row.week + FLOOR(
-                (extract(day from start_date + offset + '1 month'::interval - (start_date + offset))
-                  - extract(day from start_date + offset)) / 7) + 1)
+            offset := offset
+              + (CEIL((1 + extract(day from start_date + offset + '1 month'::interval - (start_date + offset)) - extract(day from start_date + offset)) / 7)
+                + row.week)
               * '7 days'::interval;
           END LOOP;
         END IF;
@@ -105,10 +111,12 @@ BEGIN
         offset := offset + (((row.day-cast(extract(dow from start_date+offset) as int))%7)||' days')::interval;
 
         -- adjusting the day of week could have put us in a different month
-        IF extract(month from start_date+offset) < row.month OR (row.month = 1 AND extract(month from start_date+offset) = 12) THEN
-          offset := offset + '7 days'::interval;
-        ELSIF extract(month from start_date+offset) > row.month OR (row.month = 12 AND extract(month from start_date+offset) = 1) THEN
-          offset := offset - '7 days'::interval;
+        IF extract(month from start_date) != extract(month from start_date + offset) THEN
+          IF cast(extract(month from start_date) - extract(month from start_date + offset) as int) % 12 = 1 THEN
+            offset := offset + '7 days'::interval;
+          ELSE
+            offset := offset - '7 days'::interval;
+          END IF;
         END IF;
 
         recurs := 'yearly_by_week_dow';
@@ -129,10 +137,9 @@ BEGIN
             IF extract(month from start_date+offset) != row.month THEN
               offset := offset + '7 days'::interval;
             END IF;
-            offset := offset +
-              (FLOOR(
-                (extract(day from start_date + offset + '1 month'::interval - (start_date + offset))
-                  - extract(day from start_date + offset)) / 7) - 1 - row.week)
+            offset := offset
+              + (CEIL((1 + extract(day from start_date + offset + '1 month'::interval - (start_date + offset)) - extract(day from start_date + offset)) / 7)
+                + row.week)
               * '7 days'::interval;
           END LOOP;
         END IF;
@@ -147,7 +154,7 @@ BEGIN
       END IF;
 
       duration := interval_for(recurs);
-      WHILE offset < 0 LOOP
+      WHILE start_date + offset < start_date LOOP
         offset := offset + duration;
       END LOOP;
       start_date := start_date + offset;
@@ -178,10 +185,10 @@ BEGIN
             AND date = next_date::date;
         CONTINUE WHEN cancelled > 0;
         IF event.date IS NOT NULL THEN
-          event.date := next_date;
+          event.date := next_date::date;
         ELSE
-          event.starts_at := (next_date || ' ' || start_time)::timestamp;
-          event.ends_at := event.starts_at+(end_date-start_date);
+          event.starts_at := (next_date || ' ' || start_time)::timestamp - tz_offset;
+          event.ends_at := event.starts_at+(end_date-start_date) - tz_offset;
           CONTINUE WHEN event.ends_at < range_start;
         END IF;
         RETURN NEXT event;

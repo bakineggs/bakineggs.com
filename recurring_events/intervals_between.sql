@@ -20,8 +20,6 @@ BEGIN
     EXIT WHEN multiplier = 1;
     multiplier := multiplier / 2;
   END LOOP;
-
-  -- calculate the remainder
   count := count + (extract(epoch from end_date) - extract(epoch from (start_date + count * duration))) / (extract(epoch from end_date + duration) - extract(epoch from end_date))::int;
   RETURN count;
 END

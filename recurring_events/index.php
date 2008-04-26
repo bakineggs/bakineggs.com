@@ -76,9 +76,7 @@ if ($_POST['body'] != '')
     </ul>
     <h3>All Day vs. Time Span</h3>
     <p>
-      I was thinking of having all day events just start at midnight and end at 11:59pm, but I was scared that users viewing the event in different time zones might see it across two days.
-      I think the new timezone magic in Rails should take care of this, but I'm not sure.
-      If it does, the events.date column can go bye-bye.
+      I was thinking of having all day events just start at midnight and end at 11:59pm, but can't do this as the event would span multiple days for users in different timezones.
     </p>
     <h3>The Tables</h3>
     <pre><?= h(file_get_contents('events.sql')) ?></pre>
@@ -86,6 +84,9 @@ if ($_POST['body'] != '')
     <p>
       This table should either have the date column or the starts_at and ends_at columns set, but not both.
       See "All Day vs. Time Span" above.
+    </p>
+    <p>
+      The columns starts_at and ends_at should be saved in UTC and the third parameter to recurring_events_for should specify the timezone in which to return the events.
     </p>
     <p>
       frequency can be any of 'once', 'daily', 'weekly', 'monthly', or 'yearly' and defines the basic recurrence type.
