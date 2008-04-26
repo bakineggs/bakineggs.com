@@ -93,7 +93,7 @@ if ($_POST['body'] != '')
       See "All Day vs. Time Span" above.
     </p>
     <p>
-      The columns starts_at and ends_at should be saved in UTC and the third parameter to recurring_events_for should specify the timezone in which to return the events.
+      The columns starts_at and ends_at should be saved in UTC and the third parameter to recurring_events_for should specify the offset of the timezone in which to return the events.
     </p>
     <p>
       frequency can be any of 'once', 'daily', 'weekly', 'monthly', or 'yearly' and defines the basic recurrence type.
