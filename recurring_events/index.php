@@ -41,14 +41,21 @@ if ($_POST['body'] != '')
       I would too.
     </p>
     <p>
-      Revision history, specs, and updates are available on <a href="http://github.com/danbarry/recurring_events_for">the github page for this function</a>.
+      Revision history is available on <a href="http://github.com/danbarry/recurring_events_for">the github page for this function</a>.
     </p>
     <ul>
-      <li><a href="events.sql">events.sql</a></li>
-      <li><a href="interval_for.sql">interval_for.sql</a></li>
-      <li><a href="intervals_between.sql">intervals_between.sql</a></li>
-      <li><a href="generate_recurrences.sql">generate_recurrences.sql</a></li>
-      <li><a href="recurring_events_for.sql">recurring_events_for.sql</a></li>
+      <li><a href="sql/events.sql">events.sql</a></li>
+      <li><a href="sql/interval_for.sql">interval_for.sql</a></li>
+      <li><a href="sql/intervals_between.sql">intervals_between.sql</a></li>
+      <li><a href="sql/generate_recurrences.sql">generate_recurrences.sql</a></li>
+      <li><a href="sql/recurring_events_for.sql">recurring_events_for.sql</a></li>
+    </ul>
+    <ul>
+      <li><a href="sql/spec/helper.rb">spec/helper.rb</a></li>
+      <li><a href="sql/spec/interval_for.rb">spec/interval_for.rb</a></li>
+      <li><a href="sql/spec/intervals_between.rb">spec/intervals_between.rb</a></li>
+      <li><a href="sql/spec/generate_recurrences.rb">spec/generate_recurrences.rb</a></li>
+      <li><a href="sql/spec/recurring_events_for.rb">spec/recurring_events_for.rb</a></li>
     </ul>
     <p>
       Note: This only works on PostgreSQL with <a href="http://www.postgresql.org/docs/8.3/static/plpgsql.html">PL/pgSQL</a> installed.
