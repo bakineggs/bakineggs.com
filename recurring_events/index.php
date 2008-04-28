@@ -52,10 +52,10 @@ if ($_POST['body'] != '')
     </ul>
     <ul>
       <li><a href="sql/spec/helper.rb">spec/helper.rb</a></li>
-      <li><a href="sql/spec/interval_for.rb">spec/interval_for.rb</a></li>
-      <li><a href="sql/spec/intervals_between.rb">spec/intervals_between.rb</a></li>
-      <li><a href="sql/spec/generate_recurrences.rb">spec/generate_recurrences.rb</a></li>
-      <li><a href="sql/spec/recurring_events_for.rb">spec/recurring_events_for.rb</a></li>
+      <li><a href="sql/spec/interval_for_spec.rb">spec/interval_for_spec.rb</a></li>
+      <li><a href="sql/spec/intervals_between_spec.rb">spec/intervals_between_spec.rb</a></li>
+      <li><a href="sql/spec/generate_recurrences_spec.rb">spec/generate_recurrences_spec.rb</a></li>
+      <li><a href="sql/spec/recurring_events_for_spec.rb">spec/recurring_events_for_spec.rb</a></li>
     </ul>
     <p>
       Note: This only works on PostgreSQL with <a href="http://www.postgresql.org/docs/8.3/static/plpgsql.html">PL/pgSQL</a> installed.
