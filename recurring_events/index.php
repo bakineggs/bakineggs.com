@@ -1,21 +1,7 @@
 <?php
-require_once('functions/util.inc.php');
-require_once('functions/db_connect.inc.php');
-$dbh = db_connect('bakineggs');
-if ($_POST['body'] != '')
-  mysql_query("insert into comments (
-      `name`,
-      `email`,
-      `url`,
-      `body`
-    ) values (
-      '".mesc($_POST['name'])."',
-      '".mesc($_POST['email'])."',
-      '".mesc($_POST['url'])."',
-      '".mesc($_POST['body'])."'
-    );");
+require_once('../comments_for.inc.php');
+echo '<?xml version="1.0" encoding="utf-8" ?>';
 ?>
-<?= '<?xml version="1.0" encoding="utf-8" ?>' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html lang="en-US" xml:lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
   <head>
@@ -203,96 +189,6 @@ if ($_POST['body'] != '')
     <p>
       Finally, we loop through our generated recurrences, change date or starts_at and ends_at to the values for this recurrence, and return it if it wasn't cancelled.
     </p>
-    <h2>Post a Comment</h2>
-    <form method="post" action="/recurring_events/">
-      <p>
-        <label for="name">Name</label>
-        <em>Optional</em>
-        <br />
-        <input id="name" type="text" name="name" value="<?= h($_POST['name']) ?>" />
-      </p>
-      <p>
-        <label for="email">Email</label>
-        <em>Optional</em>
-        <br />
-        <input id="email" type="text" name="email" value="<?= h($_POST['email']) ?>" />
-      </p>
-      <p>
-        <label for="url">URL</label>
-        <em>Optional</em>
-        <br />
-        <input id="url" type="text" name="url" value="<?= h($_POST['url']) ?>" />
-      </p>
-      <p>
-        <label for="body">Body</label>
-        <br />
-        <textarea id="body" name="body" rows="10" cols="70"><?= h($_POST['body']) ?></textarea>
-      </p>
-      <p>
-        <input type="submit" value="Post" />
-      </p>
-    </form>
-    <h2>Comments</h2>
-<?php
-$comments = mysql_query('select * from comments order by timestamp');
-if (mysql_num_rows($comments) == 0) {
-?>
-    <p>
-      No comments have been posted yet
-    </p>
-<?php
-}
-while ($comment = mysql_fetch_assoc($comments)) { ?>
-    <h3>
-      At <?= date('g:ia', strtotime($comment['timestamp'])) ?> UTC on <?= date('l, F j, Y', strtotime($comment['timestamp'])) ?>,
-<?php
-if ($comment['name']) {
-  if ($comment['email']) {
-?>
-      <a href="mailto:<?= h($comment['email']) ?>"><?= h($comment['name']) ?></a>
-<?php
-    if ($comment['url']) {
-?>
-      (<a href="<?= h($comment['url']) ?>"><?= h($comment['url']) ?></a>)
-<?php
-    }
-  } else if ($comment['url']) {
-?>
-      <a href="<?= h($comment['url']) ?>"><?= h($comment['name']) ?></a>
-<?php
-  } else {
-?>
-      <?= h($comment['name']) ?>
-<?php
-  }
-} else if ($comment['email'] || $comment['url']) {
-  if ($comment['email']) {
-?>
-      <a href="mailto:<?= h($comment['email']) ?>"><?= h($comment['email']) ?></a>
-<?php
-  } else {
-?>
-      <em>Anonymous</em>
-<?php
-  }
-  if ($comment['url']) {
-?>
-      (<a href="<?= h($comment['url']) ?>"><?= h($comment['url']) ?></a>)
-<?php
-  }
-}
-else
-{
-?>
-      <em>Anonymous</em>
-<?php
-}
-?>
-      said:
-    </h3>
-    <p>
-      <?= nl2br(h($comment['body'])) ?>
-    </p>
-<?php } ?>
+<?= comments_for('recurring_events') ?>
   </body>
 </html>

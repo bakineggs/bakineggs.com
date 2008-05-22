@@ -21,6 +21,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 CREATE TABLE IF NOT EXISTS `comments` (
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `post` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `url` varchar(255) NOT NULL,
