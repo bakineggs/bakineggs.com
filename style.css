@@ -9,6 +9,7 @@ body {
 #content {
   margin: 0 auto;
   width: 346px;
+  position: relative;
 }
 a {
   color: #be90fc;

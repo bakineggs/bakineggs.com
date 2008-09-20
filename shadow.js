@@ -1,10 +1,17 @@
 $(document).ready(function() {
+  var cloneAndPlace = function(element, dom_class, offset) {
+    e_offset = element.offset();
+    clone = element.clone().addClass(dom_class).width(element.width()).height(element.height()).css('top', e_offset['top']).css('left', e_offset['left']);
+    element.after(clone);
+    c_offset = clone.offset();
+    clone.css('left', 2 * e_offset['left'] - c_offset['left'] + offset).css('top', 2 * e_offset['top'] - c_offset['top'] + offset);
+  };
+
   var makeShadow = function(element) {
     element = $(element);
-    offset = element.offset();
-    shadow = element.clone().addClass('shadow').width(element.width()).height(element.height()).css('top', offset['top']+1).css('left', offset['left']+1);
-    over = element.clone().addClass('overShadow').width(element.width()).height(element.height()).css('top', offset['top']).css('left', offset['left']);
-    element.before(over).after(shadow).css('visibility', 'hidden'); 
+    cloneAndPlace(element, 'shadow', 1);
+    cloneAndPlace(element, 'overShadow', 0);
+    element.css('visibility', 'hidden');
   };
 
   var makeShadows = function(selector) {
