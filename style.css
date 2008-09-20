@@ -1,0 +1,28 @@
+body {
+  background-color: #be90fc;
+  background-image: url(/bakineggs.jpg);
+  background-repeat: no-repeat;
+  background-position: top center;
+  font-family: georgia,sans-serif;
+  font-style: italic;
+}
+#content {
+  margin: 0 auto;
+  width: 346px;
+}
+a {
+  color: #be90fc;
+}
+.overShadow {
+  color: #000;
+  position: absolute;
+  z-index: 1;
+}
+.shadow {
+  color: #be90fc;
+  position: absolute;
+  z-index: 0;
+}
+.shadow a {
+  color: #000;
+}
