@@ -1,11 +1,10 @@
 $(document).ready(function() {
   var place = function(element, target, offset) {
-    element.width(target.width()).height(target.height());
-    t_offset = target.offset();
-    element.css('top', t_offset['top']).css('left', t_offset['left']);
+    element.width(target.width()).height(target.height()).css('top', 0).css('left', 0);
     target.after(element);
+    t_offset = target.offset();
     e_offset = element.offset();
-    element.css('left', 2 * t_offset['left'] - e_offset['left'] + offset).css('top', 2 * t_offset['top'] - e_offset['top'] + offset);
+    element.css('left', t_offset['left'] - e_offset['left'] + offset).css('top', t_offset['top'] - e_offset['top'] + offset);
   };
 
   var cloneAndPlace = function(element, dom_class, offset) {
@@ -33,5 +32,6 @@ $(document).ready(function() {
   makeShadows('h1');
   makeShadows('h2');
   makeShadows('ul');
+  makeShadows('p');
   makeShadows('img');
 });

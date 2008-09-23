@@ -9,6 +9,7 @@ body {
   float: left;
 }
 #content h1 {
+  font-size: 3em;
   width: 6em;
   margin: 0 auto;
 }
@@ -23,6 +24,9 @@ body {
   margin: 0 auto;
   border: 0;
 }
+p {
+  font-size: 2em;
+}
 a {
   color: #be90fc;
 }
@@ -36,10 +40,16 @@ a {
   position: absolute;
   z-index: 1;
 }
+p.overShadow {
+  color: #fff;
+}
 .shadow {
   color: #be90fc;
   position: absolute;
   z-index: 0;
+}
+p.shadow {
+  color: #000;
 }
 .shadow a {
   color: #000;
