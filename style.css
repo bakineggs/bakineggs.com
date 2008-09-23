@@ -4,12 +4,31 @@ body {
   font-style: italic;
 }
 #content {
-  margin: 0 auto;
-  width: 25em;
   position: relative;
+  width: 75%;
+  float: left;
+}
+#content h1 {
+  width: 6em;
+  margin: 0 auto;
+}
+#picture, #projects, #links {
+  position: relative;
+  float: right;
+  clear: right;
+  width: 15em;
+}
+#picture img {
+  width: 13em;
+  margin: 0 auto;
 }
 a {
   color: #be90fc;
+}
+.blockShadow {
+  background-color: #be90fc;
+  position: absolute;
+  z-index: 0;
 }
 .overShadow {
   color: #000;
