@@ -21,6 +21,7 @@ body {
 #picture img {
   width: 13em;
   margin: 0 auto;
+  border: 0;
 }
 a {
   color: #be90fc;
