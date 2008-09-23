@@ -30,6 +30,12 @@ p {
 a {
   color: #be90fc;
 }
+li a:hover {
+  color: #a370bd;
+  background-color: #fff;
+  text-decoration: none;
+  padding: 0 1px 1px 0;
+}
 .blockShadow {
   background-color: #be90fc;
   position: absolute;
