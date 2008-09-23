@@ -1,14 +1,11 @@
 body {
-  background-color: #be90fc;
-  background-image: url(/bakineggs.jpg);
-  background-repeat: no-repeat;
-  background-position: top center;
+  background-color: #a370bd;
   font-family: georgia,sans-serif;
   font-style: italic;
 }
 #content {
   margin: 0 auto;
-  width: 346px;
+  width: 25em;
   position: relative;
 }
 a {
