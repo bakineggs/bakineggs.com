@@ -9,11 +9,11 @@ class ActivityPresenter {
     return '<span class="timestamp">' . date('D, F j, Y g:ia', $timestamp) . '</span>';
   }
 
-  public function content($content) {
+  public function content($content, $type = null) {
     if ($content['type'] == 'text')
       return '<p class="content">' . $this->h($content['value']) . '</p>';
     if ($content['type'] == 'html' || $content['type'] == 'xhtml')
-      return '<div class="content">' . $content['value'] . '</div>';
+      return '<div class="content ' . $this->h($type) . '">' . $content['value'] . '</div>';
   }
 
   public function entry($entry) {
@@ -24,12 +24,17 @@ class ActivityPresenter {
     if ($entry['published'])
       $contents .= $this->timestamp($entry['published']);
     if ($entry['content'])
-      $contents .= $this->content($entry['content']);
+      $contents .= $this->content($entry['content'], $this->type($entry));
 
     if ($contents)
       return '<div class="entry">' . $contents . '</div>';
     else
       return '';
+  }
+
+  public function type($entry) {
+    preg_match('/,\d+:(.+)\//', $entry['id'], $matches);
+    return $matches[1];
   }
 
   public function entries($entries) {
