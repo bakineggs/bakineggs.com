@@ -6,7 +6,7 @@ class ActivityPresenter {
   }
 
   public function timestamp($timestamp) {
-    return '<span class="timestamp">' . date('D, F j, Y g:ia', $timestamp) . '</span>';
+    return '<span class="timestamp">' . date('D n/j/Y g:ia', $timestamp) . '</span>';
   }
 
   public function content($content, $type = null) {
