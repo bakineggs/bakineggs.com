@@ -1,6 +1,6 @@
 $(document).ready(function() {
   var place = function(element, target, offset) {
-    element.width(target.width()).height(target.height()).css('top', 0).css('left', 0);
+    element.width(target.width()+1).height(target.height()).css('top', 0).css('left', 0);
     target.after(element);
     t_offset = target.offset();
     e_offset = element.offset();

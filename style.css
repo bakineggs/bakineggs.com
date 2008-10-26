@@ -14,6 +14,20 @@ body {
   width: 6em;
   margin: 0 auto;
 }
+#activity .entry {
+  border-top: 1px solid #000;
+  margin: 1em 0 2em;
+}
+#activity .entry h2 {
+  margin: 0 0 .5em;
+  float: left;
+}
+#activity .entry .timestamp {
+  float: right;
+}
+#activity .entry .content {
+  clear: both;
+}
 #picture, #projects, #links {
   position: relative;
   float: right;
