@@ -3,12 +3,13 @@ body {
   font-family: georgia,sans-serif;
   font-style: italic;
 }
-#content {
+#activity, #title {
   position: relative;
   width: 75%;
   float: left;
+  clear: left;
 }
-#content h1 {
+#title h1 {
   font-size: 3em;
   width: 6em;
   margin: 0 auto;

@@ -1,4 +1,29 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?php
+require 'lib/lib-utf8.php';
+require 'lib/lib-entity.php';
+require 'lib/lib-feedparser.php';
+require 'lib/activity_presenter.php';
+
+define('ACTIVITY_FILE', '/tmp/bakineggs_activity.html');
+define('ACTIVITY_ATOM', 'http://github.com/danbarry.atom');
+
+if (!file_exists(ACTIVITY_FILE) || filemtime(ACTIVITY_FILE) + 600 < time()) {
+  touch(ACTIVITY_FILE); // prevent other instances of this script from modifying
+
+  $parser = new FeedParserURL();
+  $result = $parser->Parse(ACTIVITY_ATOM);
+  if ($result['feed'] && $entries = $result['feed']['entries']) {
+    $tmpfile = tempnam('/tmp', 'activity');
+    $activity = fopen($tmpfile, 'w');
+    $presenter = new ActivityPresenter();
+    fputs($activity, $presenter->entries($entries));
+    fclose($activity);
+    rename($tmpfile, ACTIVITY_FILE);
+  }
+}
+
+echo '<?xml version="1.0" encoding="utf-8" ?>';
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html lang="en-US" xml:lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
   <head>
@@ -6,11 +31,11 @@
     <link rel="stylesheet" type="text/css" href="/style.css" />
   </head>
   <body>
-    <div id="content">
+    <div id="title">
       <h1>bakineggs</h1>
-      <p>
-        jittereh kitteh need moar catnip.
-      </p>
+    </div>
+    <div id="activity">
+      <? readfile('/tmp/bakineggs_activity.html') ?>
     </div>
     <div id="picture">
       <a href="/me.jpg">
