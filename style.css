@@ -28,6 +28,9 @@ body {
 #activity .entry .content {
   clear: both;
 }
+#activity .entry .content.CommitEvent a {
+  display: none;
+}
 #picture, #projects, #links {
   position: relative;
   float: right;
@@ -40,7 +43,7 @@ body {
   border: 0;
 }
 p {
-  font-size: 2em;
+  margin: 0;
 }
 a {
   color: #be90fc;
@@ -61,16 +64,10 @@ li a:hover {
   position: absolute;
   z-index: 1;
 }
-p.overShadow {
-  color: #fff;
-}
 .shadow {
   color: #be90fc;
   position: absolute;
   z-index: 0;
-}
-p.shadow {
-  color: #000;
 }
 .shadow a {
   color: #000;

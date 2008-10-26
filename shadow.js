@@ -32,6 +32,5 @@ $(document).ready(function() {
   makeShadows('h1');
   makeShadows('h2');
   makeShadows('ul');
-  makeShadows('p');
   makeShadows('img');
 });
