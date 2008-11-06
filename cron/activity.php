@@ -1,8 +1,8 @@
 <?php
-require '../lib/lib-utf8.php';
-require '../lib/lib-entity.php';
-require '../lib/lib-feedparser.php';
-require '../lib/activity_presenter.php';
+require __DIR__ . '/../lib/lib-utf8.php';
+require __DIR__ . '/../lib/lib-entity.php';
+require __DIR__ . '/../lib/lib-feedparser.php';
+require __DIR__ . '/../lib/activity_presenter.php';
 
 define('ACTIVITY_FILE', '/tmp/bakineggs_activity.html');
 define('ACTIVITY_ATOM', 'http://github.com/danbarry.atom');
