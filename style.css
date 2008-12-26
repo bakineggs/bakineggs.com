@@ -48,7 +48,7 @@ p {
 a {
   color: #be90fc;
 }
-li a:hover {
+#projects a:hover, #links a:hover {
   color: #a370bd;
   background-color: #fff;
   text-decoration: none;
