@@ -3,33 +3,22 @@ body {
   font-family: georgia,sans-serif;
   font-style: italic;
 }
-#activity, #title {
+#about, #title {
   position: relative;
   width: 75%;
   float: left;
   clear: left;
 }
+#about p {
+  margin: 0 3em;
+}
+#about h2 {
+  margin-left: 3em;
+}
 #title h1 {
   font-size: 3em;
   width: 6em;
   margin: 0 auto;
-}
-#activity .entry {
-  border-top: 1px solid #000;
-  margin: 1em 0 2em;
-}
-#activity .entry h2 {
-  margin: 0 0 .5em;
-  float: left;
-}
-#activity .entry .timestamp {
-  float: right;
-}
-#activity .entry .content {
-  clear: both;
-}
-#activity .entry .content.CommitEvent a {
-  display: none;
 }
 #picture, #projects, #links {
   position: relative;
@@ -42,13 +31,10 @@ body {
   margin: 0 auto;
   border: 0;
 }
-p {
-  margin: 0;
-}
 a {
   color: #be90fc;
 }
-#projects a:hover, #links a:hover {
+a:hover {
   color: #a370bd;
   background-color: #fff;
   text-decoration: none;

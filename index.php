@@ -9,8 +9,15 @@
     <div id="title">
       <h1>bakineggs</h1>
     </div>
-    <div id="activity">
-      <? readfile('/tmp/bakineggs_activity.html') ?>
+    <div id="about">
+      <h2>About Me</h2>
+      <p>
+        My name is Dan Barry.
+        I'm a junior in Computer Science at <a href="http://illinois.edu">The University of Illinois at Urbana-Champaign</a>.
+        I've been programming for over ten years now.
+        Most recently, I've been programming in <a href="http://ruby-lang.org">Ruby</a> and using the <a href="http://rubyonrails.org">Rails</a> framework.
+        I'm also proficient in <a href="http://php.net">PHP</a>.
+      </p>
     </div>
     <div id="picture">
       <a href="/me.jpg">
