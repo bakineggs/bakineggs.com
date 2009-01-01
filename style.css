@@ -3,33 +3,43 @@ body {
   font-family: georgia,sans-serif;
   font-style: italic;
 }
-#about, #title {
+#content, #meta, #about, #projects {
   position: relative;
+}
+#content {
   width: 75%;
   float: left;
-  clear: left;
 }
-#about p {
-  margin: 0 3em;
+#meta {
+  width: 15em;
+  float: right;
 }
-#about h2 {
-  margin-left: 3em;
+#about p, #projects ul {
+  margin: 0 4em;
+  list-style-type: none;
+  padding: 0;
+}
+#projects ul li {
+  position: relative;
+}
+#projects ul li p {
+  margin-left: 1em;
+}
+#about h2, #projects h2 {
+  margin-left: 2em;
 }
 #title h1 {
   font-size: 3em;
   width: 6em;
   margin: 0 auto;
 }
-#picture, #projects, #links {
-  position: relative;
-  float: right;
-  clear: right;
-  width: 15em;
-}
 #picture img {
   width: 13em;
   margin: 0 auto;
   border: 0;
+}
+#picture a:hover {
+  background-color: transparent;
 }
 a {
   color: #be90fc;

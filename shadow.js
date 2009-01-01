@@ -31,7 +31,7 @@ $(document).ready(function() {
 
   makeShadows('h1');
   makeShadows('h2');
-  makeShadows('#projects ul');
+  makeShadows('h3');
   makeShadows('#links ul');
   makeShadows('img');
 });
