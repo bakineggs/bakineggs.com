@@ -17,7 +17,7 @@
           I'm a junior in Computer Science at <a href="http://illinois.edu">The University of Illinois at Urbana-Champaign</a>.
           I've been programming for over ten years now.
           Most recently, I've been programming in <a href="http://ruby-lang.org">Ruby</a> and using the <a href="http://rubyonrails.org">Rails</a> framework.
-          I'm also proficient in <a href="http://php.net">PHP</a>.
+          I'm also proficient in <a href="http://php.net">PHP</a> and JavaScript.
         </p>
       </div>
       <div id="projects">
@@ -48,7 +48,7 @@
           <li>
             <h3><a href="http://github.com/danbarry/cars/">cars</a></h3>
             <p>
-              Using PHP and JavaScript, I wrote a spreadsheet-like webapp that I used to collect data about different cars I was considering purchasing.
+              Using PHP and JavaScript (with the <a href="http://jquery.com">jQuery</a> framework), I wrote a spreadsheet-like webapp that I used to collect data about different cars I was considering purchasing.
               The actual spreadsheet with the research I did is available <a href="/cars">here</a> (I ended up buying the Lincoln Continental).
             </p>
           </li>
