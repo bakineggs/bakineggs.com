@@ -3,9 +3,6 @@ body {
   font-family: georgia,sans-serif;
   font-style: italic;
 }
-#content, #meta, #about, #projects {
-  position: relative;
-}
 #content {
   width: 75%;
   float: left;
@@ -18,9 +15,6 @@ body {
   margin: 0 4em;
   list-style-type: none;
   padding: 0;
-}
-#projects ul li {
-  position: relative;
 }
 #projects ul li p {
   margin-left: 1em;

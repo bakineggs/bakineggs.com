@@ -14,6 +14,7 @@ $(document).ready(function() {
 
   var makeShadow = function(element) {
     element = $(element);
+    element.parent().css('position', 'relative');
     if (element.is('img')) {
       place(element.clone().addClass('overShadow'), element, 0);
       element.css('visibility', 'hidden');
