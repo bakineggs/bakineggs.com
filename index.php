@@ -28,7 +28,7 @@
             <p>
               recurring_events_for is a function written in PL/pgSQL (a procedural language for PostgreSQL).
               It is used to find the dates on which recurring events occur (for instance, an event that occurs on the second Tuesday of every month).
-              It can also return all events occurring within a given timespan based on their repition rules.
+              It can also return all events occurring within a given timespan based on their repetion rules.
             </p>
           </li>
           <li>
