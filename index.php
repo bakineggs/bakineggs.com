@@ -1,4 +1,28 @@
-<?= '<?xml version="1.0" encoding="utf-8" ?>' ?>
+<?php
+$PAGES = array(
+  'about' => 'About Me',
+  'projects' => 'My Projects',
+  'contributions' => 'Contributions to Other Projects',
+  'resume' => 'Resume',
+  'error404' => 'Error 404'
+);
+
+$uri_parts = explode('/', $_SERVER['REQUEST_URI']);
+while (sizeof($uri_parts) > 0 && $uri_parts[0] == '')
+  array_shift($uri_parts);
+
+if (sizeof($uri_parts) > 0)
+  $page = strtolower($uri_parts[0]);
+else
+  $page = 'about';
+
+if (!in_array($page, array_keys($PAGES)))
+  $page = 'error404';
+
+$content_file = 'content/' . $page . '.html';
+
+echo '<?xml version="1.0" encoding="utf-8" ?>';
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html lang="en-US" xml:lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
   <head>
@@ -10,56 +34,14 @@
       <h1>bakineggs</h1>
     </div>
     <ul id="navigation">
-      <li><a href="#">About Me</a></li>
-      <li><a href="#">My Projects</a></li>
-      <li><a href="#">Contributions</a></li>
-      <li><a href="#">Resume</a></li>
+      <li><a href="/About">About Me</a></li>
+      <li><a href="/Projects">My Projects</a></li>
+      <li><a href="/Contributions">Contributions</a></li>
+      <li><a href="/Resume">Resume</a></li>
     </ul>
-    <div id="content">
-      <div id="about">
-        <h2>About Me</h2>
-        <p>
-          My name is Dan Barry.
-          I'm a junior in Computer Science at <a href="http://illinois.edu">The University of Illinois at Urbana-Champaign</a>.
-          I've been programming for over ten years now.
-          Most recently, I've been programming in <a href="http://ruby-lang.org">Ruby</a> and using the <a href="http://rubyonrails.org">Rails</a> framework.
-          I'm also proficient in <a href="http://php.net">PHP</a> and JavaScript.
-        </p>
-      </div>
-      <div id="projects">
-        <h2>Projects</h2>
-        <ul>
-          <li>
-            <h3><a href="http://github.com/danbarry/recurring_events_for/">recurring_events_for</a></h3>
-            <p>
-              recurring_events_for is a function written in PL/pgSQL (a procedural language for PostgreSQL).
-              It is used to find the dates on which recurring events occur (for instance, an event that occurs on the second Tuesday of every month).
-              It can also return all events occurring within a given timespan based on their repetion rules.
-            </p>
-          </li>
-          <li>
-            <h3><a href="http://github.com/danbarry/poker/">poker</a></h3>
-            <p>
-              This is a ruby library for constructing and comparing poker hands.
-              It also provides a deck of cards.
-            </p>
-          </li>
-          <li>
-            <h3><a href="http://github.com/danbarry/hold_em_bonus/">hold_em_bonus</a></h3>
-            <p>
-              This is a ruby script I wrote to analyze different betting strategies that can be used in Hold'em Bonus (a casino table game).
-              It uses the poker library I wrote.
-            </p>
-          </li>
-          <li>
-            <h3><a href="http://github.com/danbarry/cars/">cars</a></h3>
-            <p>
-              Using PHP and JavaScript (with the <a href="http://jquery.com">jQuery</a> framework), I wrote a spreadsheet-like webapp that I used to collect data about different cars I was considering purchasing.
-              The actual spreadsheet with the research I did is available <a href="/cars">here</a> (I ended up buying the Lincoln Continental).
-            </p>
-          </li>
-        </ul>
-      </div>
+    <div id="content" class="<?= $page ?>">
+      <h2><?= $PAGES[$page] ?></h2>
+      <?php readfile($content_file); ?>
     </div>
     <div id="meta">
       <div id="picture">
