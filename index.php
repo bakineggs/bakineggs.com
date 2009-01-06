@@ -28,6 +28,7 @@ echo '<?xml version="1.0" encoding="utf-8" ?>';
   <head>
     <title>bakineggs</title>
     <link rel="stylesheet" type="text/css" href="/style.css" />
+    <link rel="stylesheet" type="text/css" media="print" href="/print.css" />
   </head>
   <body>
     <div id="title">

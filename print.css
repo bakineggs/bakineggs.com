@@ -1,0 +1,20 @@
+html, body {
+  border: 0;
+}
+
+#title, #navigation, #meta, #credits {
+  display: none;
+}
+
+#content {
+  width: 100%;
+  padding: 0;
+}
+
+#content.resume h2 {
+  display: none;
+}
+
+a {
+  border: 0 !important;
+}
