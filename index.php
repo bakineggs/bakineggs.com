@@ -6,10 +6,16 @@
     <link rel="stylesheet" type="text/css" href="/style.css" />
   </head>
   <body>
+    <div id="title">
+      <h1>bakineggs</h1>
+    </div>
+    <ul id="navigation">
+      <li><a href="#">About Me</a></li>
+      <li><a href="#">My Projects</a></li>
+      <li><a href="#">Contributions</a></li>
+      <li><a href="#">Resume</a></li>
+    </ul>
     <div id="content">
-      <div id="title">
-        <h1>bakineggs</h1>
-      </div>
       <div id="about">
         <h2>About Me</h2>
         <p>
@@ -70,7 +76,10 @@
         </ul>
       </div>
     </div>
-    <script type="text/javascript" src="/jquery-1.2.6.min.js"></script>
-    <script type="text/javascript" src="/shadow.js"></script>
+    <div id="credits">
+      <p>
+        Template design by <a href="http://www.sixshootermedia.com">Six Shooter Media</a>.
+      </p>
+    </div>
   </body>
 </html>
