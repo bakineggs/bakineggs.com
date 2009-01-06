@@ -15,7 +15,6 @@ body {
   font: 16px/1.95em geneva,verdana,sans-serif;
   margin: 0;
   color: #666;
-  padding-top: 20px;
   border: 3px solid #eee;
 }
 
@@ -35,7 +34,10 @@ img {
 }
 
 #title {
-  padding: 20px 0;
+  padding: 40px 0 20px;
+  background-image: url(/images/egg.jpg);
+  background-position: top right;
+  background-repeat: no-repeat;
 }
 
 #title h1 {
