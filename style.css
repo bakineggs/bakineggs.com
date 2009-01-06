@@ -33,6 +33,10 @@ img {
   border: 3px solid #eee;
 }
 
+table tr td {
+  vertical-align: top;
+}
+
 #title {
   padding: 40px 0 20px;
   background-image: url(/images/egg.jpg);
@@ -76,6 +80,7 @@ ul#navigation li a:hover {
   float: left;
   width: 70%;
   padding-left: 25px;
+  padding-bottom: 25px;
 }
 
 #content h2 {
@@ -86,7 +91,7 @@ ul#navigation li a:hover {
 }
 
 #content h3 {
-  margin:20px 0;
+  margin: 20px 0 10px;
 }
 
 #content a, #credits a {
@@ -101,18 +106,36 @@ ul#navigation li a:hover {
 
 #content p {
   line-height: 30px;
-  margin: 20px 0;
+  margin: 10px 0;
   word-spacing: 2px;
 }
 
 #content ul {
-  margin:15px 0 15px 25px;
+  margin: 15px 0 15px 25px;
 }
 
 #content ul li {
-  border-bottom:1px solid #eee;
-  padding:10px;
-  color:#444;
+  border-bottom: 1px solid #eee;
+  padding: 10px;
+  color: #444;
+}
+
+#content.resume ul {
+  margin: 0 0 0 15px;
+}
+
+#content.resume li {
+  padding: 0;
+  border: 0;
+}
+
+#content.resume table tr td:first-child {
+  width: 11em;
+  border-right: 1px solid #eee;
+}
+
+#content.resume table tr td:last-child {
+  padding-left: 5px;
 }
 
 #meta {
