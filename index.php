@@ -60,7 +60,7 @@ echo '<?xml version="1.0" encoding="utf-8" ?>';
     </div>
     <div id="credits">
       <p>
-        Template design by <a href="http://www.sixshootermedia.com">Six Shooter Media</a>.
+        &copy; 2008-<?= date('Y') ?> Dan Barry. Template design by <a href="http://www.sixshootermedia.com">Six Shooter Media</a>.
       </p>
     </div>
   </body>
