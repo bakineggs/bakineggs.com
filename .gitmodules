@@ -1,3 +1,0 @@
-[submodule "recurring_events/sql"]
-	path = recurring_events/sql
-	url = git@github.com:danbarry/recurring_events_for.git
