@@ -3,7 +3,7 @@ $PAGES = array(
   'about' => 'About Me',
   'projects' => 'My Projects',
   'contributions' => 'Contributions to Other Projects',
-  'resume' => 'Resume',
+  'resume' => 'Resum&eacute;',
   'error404' => 'Error 404'
 );
 
@@ -39,7 +39,7 @@ echo '<?xml version="1.0" encoding="utf-8" ?>';
       <li><a href="/About">About Me</a></li>
       <li><a href="/Projects">My Projects</a></li>
       <li><a href="/Contributions">Contributions</a></li>
-      <li><a href="/Resume">Resume</a></li>
+      <li><a href="/Resume">Resum&eacute;</a></li>
     </ul>
     <div id="content" class="<?= $page ?>">
       <h2><?= $PAGES[$page] ?></h2>
