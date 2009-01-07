@@ -111,21 +111,20 @@ ul#navigation li a:hover {
 }
 
 #content ul {
+  margin: 0 0 0 15px;
+}
+
+#content.projects ul {
   margin: 15px 0 15px 25px;
 }
 
-#content ul li {
+#content.projects ul li {
   border-bottom: 1px solid #eee;
   padding: 10px;
   color: #444;
 }
 
-#content.resume ul {
-  margin: 0 0 0 15px;
-}
-
-#content.resume li {
-  padding: 0;
+#content.projects ul li:last-child {
   border: 0;
 }
 
