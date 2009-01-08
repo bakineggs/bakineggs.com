@@ -1,5 +1,6 @@
 html, body {
   border: 0;
+  color: #000;
 }
 
 #title, #navigation, #meta, #credits {
