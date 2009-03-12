@@ -71,10 +71,8 @@ ul#navigation li a:hover {
 }
 
 #content {
-  float: left;
-  width: 70%;
-  padding-left: 25px;
-  padding-bottom: 25px;
+  margin-right: 265px;
+  padding: 0 25px 25px 25px;
 }
 
 #content h2 {
@@ -144,7 +142,7 @@ ul#navigation li a:hover {
 }
 
 #meta {
-  margin-left: 75%;
+  float: right;
   border-left: 1px solid #eee;
   padding: 15px;
 }

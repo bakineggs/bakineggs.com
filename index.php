@@ -41,10 +41,6 @@ echo '<?xml version="1.0" encoding="utf-8" ?>';
       <li><a href="/Contributions">Contributions</a></li>
       <li><a href="/Resume">Resum&eacute;</a></li>
     </ul>
-    <div id="content" class="<?= $page ?>">
-      <h2><?= $PAGES[$page] ?></h2>
-      <?php readfile($content_file); ?>
-    </div>
     <div id="meta">
       <div id="picture">
         <a href="/me.jpg">
@@ -59,6 +55,10 @@ echo '<?xml version="1.0" encoding="utf-8" ?>';
           <li><a href="http://www.workingwithrails.com/person/13319-dan-barry">Working With Rails</a></li>
         </ul>
       </div>
+    </div>
+    <div id="content" class="<?= $page ?>">
+      <h2><?= $PAGES[$page] ?></h2>
+      <?php readfile($content_file); ?>
     </div>
     <div id="credits">
       <p>
