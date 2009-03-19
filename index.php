@@ -7,19 +7,36 @@ $PAGES = array(
   'error404' => 'Error 404'
 );
 
+$DYNAMIC_PAGES = array();
+
 $uri_parts = explode('/', $_SERVER['REQUEST_URI']);
 while (sizeof($uri_parts) > 0 && $uri_parts[0] == '')
   array_shift($uri_parts);
 
 if (sizeof($uri_parts) > 0)
-  $page = strtolower($uri_parts[0]);
+  $page = strtolower(array_shift($uri_parts));
 else
   $page = 'about';
 
 if (!in_array($page, array_keys($PAGES)))
   $page = 'error404';
 
-$content_file = 'content/' . $page . '.html';
+function render($page, $sub_path) {
+  global $DYNAMIC_PAGES;
+  if (in_array($page, $DYNAMIC_PAGES))
+    render_dynamic_page($page, $sub_path);
+  else
+    render_static_page($page);
+}
+
+function render_dynamic_page($page, $sub_path) {
+  require 'pages/' . $page . '.php';
+  render_page($sub_path);
+}
+
+function render_static_page($page) {
+  readfile('content/' . $page . '.html');
+}
 
 echo '<?xml version="1.0" encoding="utf-8" ?>';
 ?>
@@ -58,7 +75,7 @@ echo '<?xml version="1.0" encoding="utf-8" ?>';
     </div>
     <div id="content" class="<?= $page ?>">
       <h2><?= $PAGES[$page] ?></h2>
-      <?php readfile($content_file); ?>
+      <?php render($page, $sub_path) ?>
     </div>
     <div id="credits">
       <p>
