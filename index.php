@@ -4,10 +4,11 @@ $PAGES = array(
   'projects' => 'My Projects',
   'contributions' => 'Contributions to Other Projects',
   'resume' => 'Resum&eacute;',
+  'blog' => 'Blog',
   'error404' => 'Error 404'
 );
 
-$DYNAMIC_PAGES = array();
+$DYNAMIC_PAGES = array('blog');
 
 $uri = preg_replace('/\/+/', '/', $_SERVER['REQUEST_URI']);
 $uri = preg_replace('/^\/|\/$/', '', $_SERVER['REQUEST_URI']);
@@ -21,17 +22,17 @@ else
 if (!in_array($page, array_keys($PAGES)))
   $page = 'error404';
 
-function render($page, $sub_path) {
+function render($page, $params) {
   global $DYNAMIC_PAGES;
   if (in_array($page, $DYNAMIC_PAGES))
-    render_dynamic_page($page, $sub_path);
+    render_dynamic_page($page, $params);
   else
     render_static_page($page);
 }
 
-function render_dynamic_page($page, $sub_path) {
+function render_dynamic_page($page, $params) {
   require 'pages/' . $page . '.php';
-  render_page($sub_path);
+  render_page($params);
 }
 
 function render_static_page($page) {
@@ -75,7 +76,7 @@ echo '<?xml version="1.0" encoding="utf-8" ?>';
     </div>
     <div id="content" class="<?= $page ?>">
       <h2><?= $PAGES[$page] ?></h2>
-      <?php render($page, $sub_path) ?>
+      <?php render($page, $uri_parts) ?>
     </div>
     <div id="credits">
       <p>
