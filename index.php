@@ -55,6 +55,7 @@ echo '<?xml version="1.0" encoding="utf-8" ?>';
     </div>
     <ul id="navigation">
       <li><a href="/About">About Me</a></li>
+      <li><a href="/Blog">Blog</a></li>
       <li><a href="/Projects">My Projects</a></li>
       <li><a href="/Contributions">Contributions</a></li>
       <li><a href="/Resume">Resum&eacute;</a></li>

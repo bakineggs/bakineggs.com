@@ -19,7 +19,8 @@ class Entry {
   }
 
   private static function from_row($row) {
-    return new Entry($row['id'], $row['name'], $row['body'], $row['posted_at']);
+    $posted_at = strtotime($row['posted_at']);
+    return new Entry($row['id'], $row['name'], $row['body'], $posted_at);
   }
 
   private function __construct($id, $name, $body, $posted_at) {

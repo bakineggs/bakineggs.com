@@ -15,17 +15,17 @@ function render_page($params) {
 function render_entry($entry, $link_name = false) {
   if (!$entry)
     return render_not_found();
-  echo '<div class="entry" id="entry_' . h($entry->id) . '">';
+  echo '<div class="entry" id="entry_' . h($entry->id) . '">' . "\n";
   echo '<h3>';
   if ($link_name)
-    echo '<a href="/blog/' . urlencode($entry->name) . '">';
+    echo '<a href="/Blog/' . urlencode($entry->name) . '">';
   echo h($entry->name);
   if ($link_name)
     echo '</a>';
-  echo '</h3>';
-  echo '<p>' . $entry->body . '</p>';
-  echo '<span class="posted_at">' . h($entry->posted_at) . '</span>';
-  echo '</div>';
+  echo '</h3>' . "\n";
+  echo '<span class="posted_at">' . h(date('F j, Y @ g:ia', $entry->posted_at)) . '</span>' . "\n";
+  echo '<p>' . $entry->body . '</p>' . "\n";
+  echo '</div>' . "\n";
 }
 
 function render_not_found() {
