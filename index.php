@@ -11,10 +11,10 @@ $PAGES = array(
 $DYNAMIC_PAGES = array('blog');
 
 $uri = preg_replace('/\/+/', '/', $_SERVER['REQUEST_URI']);
-$uri = preg_replace('/^\/|\/$/', '', $_SERVER['REQUEST_URI']);
+$uri = preg_replace('/^\/|\/$/', '', $uri);
 $uri_parts = explode('/', $uri);
 
-if (sizeof($uri_parts) > 0)
+if (sizeof($uri_parts) > 0 && $uri_parts[0] != '')
   $page = strtolower(array_shift($uri_parts));
 else
   $page = 'about';
