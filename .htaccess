@@ -2,7 +2,7 @@
 RewriteEngine On
 RewriteRule ^content /error404
 RewriteRule ^pages /error404
-RewriteRule ^blog.rss /pages/blog.rss.php [L]
+RewriteRule ^blog.rss.xml /pages/blog.rss.xml.php [L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule . /index.php [L]
