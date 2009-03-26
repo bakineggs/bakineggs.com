@@ -1,6 +1,6 @@
 <?php
 class Entry {
-  public $id, $name, $body, $posted_at;
+  public $id, $name, $body, $summary, $posted_at;
 
   public static function find_by_name($name) {
     $result = mysql_query("select * from entries where name='" . mesc($name) . "'");
@@ -20,12 +20,13 @@ class Entry {
 
   private static function from_row($row) {
     $posted_at = strtotime($row['posted_at']);
-    return new Entry($row['id'], $row['name'], $row['body'], $posted_at);
+    return new Entry($row['id'], $row['name'], $row['summary'], $row['body'], $posted_at);
   }
 
-  private function __construct($id, $name, $body, $posted_at) {
+  private function __construct($id, $name, $summary, $body, $posted_at) {
     $this->id = $id;
     $this->name = $name;
+    $this->summary = $summary;
     $this->body = $body;
     $this->posted_at = $posted_at;
   }
