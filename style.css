@@ -31,12 +31,24 @@ img {
   border: 3px solid #eee;
 }
 
-pre {
+pre, code {
   background-color: #f8f8ff;
   border: 1px solid #ddd;
   color: #444;
-  padding: .5em;
+  padding: .25em;
+}
+
+pre {
+  margin: .5em 0;
+}
+
+code {
   font-size: .9em;
+}
+
+pre code {
+  border: 0;
+  padding: 0;
 }
 
 #title {
