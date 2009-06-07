@@ -70,7 +70,7 @@ echo '<?xml version="1.0" encoding="utf-8" ?>';
         <h2>Me Elsewhere</h2>
         <ul>
           <li><a href="http://twitter.com/bakineggs">Twitter</a></li>
-          <li><a href="http://github.com/danbarry">GitHub</a></li>
+          <li><a href="http://github.com/bakineggs">GitHub</a></li>
           <li><a href="http://del.icio.us/bakineggs">del.icio.us</a></li>
           <li><a href="http://www.workingwithrails.com/person/13319-dan-barry">Working With Rails</a></li>
         </ul>
