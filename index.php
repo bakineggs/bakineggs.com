@@ -1,11 +1,17 @@
 <?php
 $PAGES = array(
-  'about' => 'About Me',
   'projects' => 'My Projects',
   'contributions' => 'Contributions to Other Projects',
   'resume' => 'Resum&eacute;',
   'blog' => 'Blog',
   'error404' => 'Error 404'
+);
+
+$NAVIGATION_PAGES = array(
+  'blog' => 'Blog',
+  'projects' => 'My Projects',
+  'contributions' => 'Contributions',
+  'resume' => 'Resum&eacute;'
 );
 
 $DYNAMIC_PAGES = array('blog');
@@ -16,8 +22,10 @@ $uri_parts = explode('/', $uri);
 
 if (sizeof($uri_parts) > 0 && $uri_parts[0] != '')
   $page = strtolower(array_shift($uri_parts));
-else
-  $page = 'about';
+else {
+  $page = 'blog';
+  $uri_parts = array();
+}
 
 if (!in_array($page, array_keys($PAGES)))
   $page = 'error404';
@@ -50,39 +58,46 @@ echo '<?xml version="1.0" encoding="utf-8" ?>';
     <link rel="stylesheet" type="text/css" media="print" href="/print.css" />
   </head>
   <body>
-    <div id="title">
-      <h1>bakineggs</h1>
-    </div>
-    <ul id="navigation">
-      <li><a href="/About">About Me</a></li>
-      <li><a href="/Blog">Blog</a></li>
-      <li><a href="/Projects">My Projects</a></li>
-      <li><a href="/Contributions">Contributions</a></li>
-      <li><a href="/Resume">Resum&eacute;</a></li>
-    </ul>
     <div id="meta">
-      <div id="picture">
-        <a href="/me.jpg">
-          <img src="/me_thumbnail.jpg" alt="bakineggs: Dan Barry" />
-        </a>
+      <div id="title">
+        <h1>bakineggs</h1>
       </div>
-      <div id="links">
-        <h2>Me Elsewhere</h2>
-        <ul>
-          <li><a href="http://twitter.com/bakineggs">Twitter</a></li>
-          <li><a href="http://github.com/bakineggs">GitHub</a></li>
-          <li><a href="http://del.icio.us/bakineggs">del.icio.us</a></li>
-          <li><a href="http://www.workingwithrails.com/person/13319-dan-barry">Working With Rails</a></li>
-        </ul>
+      <div id="about">
+        <p>
+          My name is Dan Barry.
+          I'm a senior in Computer Science at <a href="http://illinois.edu">The University of Illinois at Urbana-Champaign</a>.
+        </p>
+        <p>
+          I've been programming for over ten years now.
+          Most recently, I've been programming in <a href="http://ruby-lang.org">Ruby</a> and using the <a href="http://rubyonrails.org">Rails</a> framework.
+          I'm also proficient in <a href="http://php.net">PHP</a> and JavaScript.
+        </p>
+        <p>
+          I'm currently living in San Francisco, California where I am an intern at <a href="http://twitter.com">Twitter</a>.
+        </p>
       </div>
     </div>
     <div id="content" class="<?= $page ?>">
       <h2><?= $PAGES[$page] ?></h2>
       <?php render($page, $uri_parts) ?>
     </div>
+    <div id="navigation">
+      <ul class="internal">
+        <?php foreach ($NAVIGATION_PAGES as $uri => $title) { ?>
+        <?php $class = $uri == $page ? ' class="current"' : ''; ?>
+        <li><a href="/<?= $uri ?>"<?= $class ?>><?= $title ?></a></li>
+        <?php } ?>
+      </ul>
+      <ul class="external">
+        <li><a href="http://twitter.com/bakineggs">Twitter</a></li>
+        <li><a href="http://github.com/bakineggs">GitHub</a></li>
+        <li><a href="http://del.icio.us/bakineggs">del.icio.us</a></li>
+        <li><a href="http://www.workingwithrails.com/person/13319-dan-barry">Working With Rails</a></li>
+      </ul>
+    </div>
     <div id="credits">
       <p>
-        &copy; 2008-<?= date('Y') ?> Dan Barry. Template design by <a href="http://www.sixshootermedia.com">Six Shooter Media</a>.
+        &copy; 2008-<?= date('Y') ?> Dan Barry. Template design by <a href="http://hunterhastings.net">Hunter Hastings</a>.
       </p>
     </div>
   </body>

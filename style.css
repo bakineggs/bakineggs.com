@@ -1,49 +1,21 @@
 * {
   margin: 0;
   padding: 0;
-  outline: none;
-}
-
-html {
-  background-color: #f6f6f6;
-}
-
-body {
-  background-color: #fff;
-  font: 16px/1.95em geneva,verdana,sans-serif;
-  margin: 15px 30px;
-  color: #666;
-  border: 3px solid #eee;
-}
-
-h1 {
-  color: #000;
-  font: 290% Times New Roman;
-}
-
-h2 {
-  color: #222;
-}
-
-img {
-  background-color: #fff;
-  padding: 1px;
-  border: 3px solid #eee;
 }
 
 pre, code {
   background-color: #f8f8ff;
   border: 1px solid #ddd;
   color: #444;
-  padding: .25em;
 }
 
 pre {
-  margin: .5em 0;
+  padding: 5px;
+  margin: 5px 0;
 }
 
 code {
-  font-size: .9em;
+  padding: 2px;
 }
 
 pre code {
@@ -51,161 +23,188 @@ pre code {
   padding: 0;
 }
 
-#title {
-  padding: 40px 0 20px;
-  background-image: url(/images/egg.jpg);
-  background-position: top right;
+body {
+  width: 800px;
+  margin: 0 auto;
+  background-color: #fff;
+  background-image: url(images/bg.png);
+  background-repeat: repeat-x;
+  font-family: arial;
+  font-size: 13px;
+  word-spacing: 1px;
+}
+
+#meta {
+  height: 335px;
+  background-image: url(images/logo.png);
+  background-position: 0 25px;
   background-repeat: no-repeat;
+  margin: 0 auto;
 }
 
-#title h1 {
-  margin-bottom: 5px;
-  margin-left: 35px;
+#meta #title {
+  display: none;
 }
 
-ul#navigation {
-  background: #8EDF53;
-  padding: 10px;
-  font-size: 80%;
-  border-top: 3px solid #6CCC26;
-  border-bottom: 3px solid #6CCC26;
-  font-weight: bold;
-}
-
-ul#navigation li {
-  display: inline;
-  list-style: none;
-  margin-right: 10px;
-}
-
-ul#navigation li a {
-  padding: 10px 14px;
+#meta #about {
+  width: 500px;
+  margin-top: 200px;
+  background-color: #1892b4;
   color: #fff;
-  border: 0;
-  text-decoration: none;
+  line-height: 18px;
+  padding: 7px 10px;
+  float: left;
+  text-align: justify;
 }
 
-ul#navigation li a:hover {
-  background: #7EDB39;
+#meta #about p {
+  margin: 5px 0px;
+}
+
+#meta #about p:first-child {
+  margin-top: 0px;
+}
+
+#meta #about p:last-child {
+  margin-bottom: 0px;
+}
+
+#meta #about p a {
   color: #fff;
 }
 
 #content {
-  margin-right: 265px;
-  padding: 0 25px 25px 25px;
+  width: 600px;
+  float: left;
+  color: #5e5e5e;
+  padding: 10px 0;
 }
 
 #content h2 {
-  margin: 10px 0;
-  padding: 10px 0;
-  font: 190% Times;
-  border-bottom: 1px solid #eee;
+  color: #000;
+  font-size: 32px;
+  margin-bottom: 15px;
 }
 
 #content h3 {
-  margin: 20px 0 10px;
+  color: #000;
+  font-size: 24px;
 }
 
-#content a, #credits a {
-  color: #222;
+#content h3 a {
   text-decoration: none;
-  border-bottom: 1px solid #ccc;
 }
 
-#content a:hover, #credits a:hover {
-  border-bottom: 1px solid #aaa;
+#content a {
+  color: #000;
 }
 
-#content p {
-  line-height: 30px;
-  margin: 10px 0;
-  word-spacing: 2px;
+#content a:hover {
+  color: #1ec742;
 }
 
-#content ul {
-  margin: 0 0 0 15px;
+#content.blog ul#entries li.entry {
+  list-style: none;
+  padding-top: 25px;
 }
 
-#content.blog .entry h3 {
-  margin-bottom: 0;
+#content.blog ul#entries li.entry:first-child {
+  padding-top: 0px;
 }
 
 #content.blog .entry .posted_at {
-  font-size: .9em;
-  font-style: italic;
+  display: block;
+  font-size: 12px;
+  color: #000;
+  font-weight: bold;
+  text-transform: uppercase;
+  padding-bottom: 3px;
+  margin-bottom: 3px;
+  border-bottom: 1px solid #f2f2f2;
 }
 
-#content.projects ul {
-  margin: 15px 0 15px 25px;
+#content.blog .entry .body {
+  line-height: 18px;
 }
 
-#content.projects ul li {
-  border-bottom: 1px solid #eee;
-  padding: 10px;
-  color: #444;
+#content.projects ul#projects li.project {
+  list-style: none;
+  padding-top: 20px;
 }
 
-#content.projects ul li:last-child {
-  border: 0;
+#content.projects ul#projects li.project:first-child {
+  padding-top: 0px;
+}
+
+#content.projects .project p {
+  line-height: 18px;
+}
+
+#content.contributions ul {
+  padding-left: 15px;
+  line-height: 18px;
+}
+
+#content.resume h3 {
+  margin: 17px 0 3px;
 }
 
 #content.resume dl dt {
   float: left;
   clear: left;
-  width: 11em;
-  border-right: 1px solid #eee;
+  width: 150px;
+  padding: 5px 0;
+  border-right: 1px solid #f2f2f2;
+  line-height: 19px;
 }
 
 #content.resume dl dd {
-  margin-left: 11em;
-  padding-left: 5px;
-  border-left: 1px solid #eee;
+  margin-left: 150px;
+  padding: 5px 0 5px 5px;
+  border-left: 1px solid #f2f2f2;
+  line-height: 19px;
 }
 
-#content.resume dl#employment dt, #content.resume dl#employment dd {
-  padding-bottom: 1em;
+#content.resume dl dd ul {
+  padding-left: 15px;
 }
 
-#content.resume dl#employment dt:last-child, #content.resume dl#employment dd:last-child {
-  padding-bottom: 0;
-}
-
-#meta {
+#navigation {
+  width: 180px;
   float: right;
-  border-left: 1px solid #eee;
-  padding: 15px;
+  padding-bottom: 20px;
 }
 
-#meta h2 {
-  font: 120% Arial;
-  margin: 5px 0;
+#navigation ul {
+  padding-top: 20px;
 }
 
-#meta ul {
+#navigation ul li {
   list-style: none;
 }
 
-#meta ul li {
-  margin-top: 1px;
-}
-
-#meta ul li a {
-  display: block;
-  background-color: #fafafa;
-  padding: 10px;
-  border: 0;
-  color: #444;
-  font: 80% Verdana;
+#navigation a {
+  font-size: 15px;
+  padding: 5px;
+  line-height: 32px;
+  background-color: #000;
+  color: #fff;
   text-decoration: none;
+  font-weight: bold;
 }
 
-#meta ul li a:hover {
-  background-color: #f6f6f6;
-  color: #333;
+#navigation a.current, #navigation a:hover {
+  background-color: #1ec742;
 }
 
 #credits {
+  display: block;
   clear: both;
-  padding: 20px 50px;
-  border-top: 2px solid #eee;
+  padding: 15px;
+  background-color: #19a0c5;
+  color: #fff;
+}
+
+#credits a {
+  color: #fff;
 }
