@@ -94,16 +94,17 @@ body {
 
 #content h2 {
   color: #000;
-  font-size: 32px;
+  font-size: 36px;
   margin-bottom: 15px;
 }
 
 #content h3 {
-  color: #000;
+  color: #444;
   font-size: 24px;
 }
 
 #content h3 a {
+  color: #444;
   text-decoration: none;
 }
 
@@ -117,7 +118,7 @@ body {
 
 #content.blog ul#entries li.entry {
   list-style: none;
-  padding-top: 25px;
+  padding: 30px 0 10px;
 }
 
 #content.blog ul#entries li.entry:first-child {
@@ -127,7 +128,7 @@ body {
 #content.blog .entry .posted_at {
   display: block;
   font-size: 12px;
-  color: #000;
+  color: #5e5e5e;
   font-weight: bold;
   text-transform: uppercase;
   padding-bottom: 3px;
