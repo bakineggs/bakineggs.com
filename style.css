@@ -40,10 +40,22 @@ body {
   background-position: 0 25px;
   background-repeat: no-repeat;
   margin: 0 auto;
+  position: relative;
 }
 
 #meta #title {
   display: none;
+}
+
+#meta #tagline {
+  width: 207px;
+  position: absolute;
+  top: 36px;
+  left: 436px;
+  text-align: justify;
+  font-size: 16px;
+  color: #fff;
+  text-shadow: 1px 1px 1px #1892b4;
 }
 
 #meta #about {

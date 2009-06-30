@@ -62,6 +62,9 @@ echo '<?xml version="1.0" encoding="utf-8" ?>';
       <div id="title">
         <h1>bakineggs</h1>
       </div>
+      <span id="tagline">
+        one spec at a time
+      </span>
       <div id="about">
         <p>
           My name is Dan Barry.
