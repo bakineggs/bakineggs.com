@@ -178,7 +178,8 @@ body {
 }
 
 #content.resume dl dd ul {
-  padding-left: 15px;
+  list-style-position: inside;
+  padding-left: 5px;
 }
 
 #navigation {
