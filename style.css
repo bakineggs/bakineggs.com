@@ -27,7 +27,7 @@ body {
   width: 800px;
   margin: 0 auto;
   background-color: #fff;
-  background-image: url(images/bg.png);
+  background-image: url(/images/bg.png);
   background-repeat: repeat-x;
   font-family: arial;
   font-size: 13px;
@@ -36,7 +36,7 @@ body {
 
 #meta {
   height: 335px;
-  background-image: url(images/logo.png);
+  background-image: url(/images/logo.png);
   background-position: 0 25px;
   background-repeat: no-repeat;
   margin: 0 auto;
@@ -48,12 +48,13 @@ body {
 }
 
 #meta #tagline {
-  width: 207px;
   position: absolute;
-  top: 36px;
-  left: 436px;
-  text-align: justify;
+  top: 31px;
+  left: 425px;
+  height: 20px;
+  padding: 5px 15px;
   font-size: 16px;
+  background-image: url(/images/tagline_bg.png);
   color: #fff;
   text-shadow: 1px 1px 1px #1892b4;
 }
