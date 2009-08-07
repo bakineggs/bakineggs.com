@@ -1,4 +1,11 @@
 <?php
+$TAGLINES = array(
+  'one spec at a time',
+  'least surprising surprise'
+);
+shuffle($TAGLINES);
+$tagline = $TAGLINES[0];
+
 $PAGES = array(
   'projects' => 'My Projects',
   'contributions' => 'Contributions to Other Projects',
@@ -63,7 +70,7 @@ echo '<?xml version="1.0" encoding="utf-8" ?>';
         <h1>bakineggs</h1>
       </div>
       <span id="tagline">
-        one spec at a time
+        <?= $tagline ?>
       </span>
       <div id="about">
         <p>
