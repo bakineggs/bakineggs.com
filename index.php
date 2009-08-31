@@ -82,9 +82,6 @@ echo '<?xml version="1.0" encoding="utf-8" ?>';
           Most recently, I've been programming in <a href="http://ruby-lang.org">Ruby</a> and using the <a href="http://rubyonrails.org">Rails</a> framework.
           I'm also proficient in <a href="http://php.net">PHP</a> and JavaScript.
         </p>
-        <p>
-          I'm currently living in San Francisco, California where I am an intern at <a href="http://twitter.com">Twitter</a>.
-        </p>
       </div>
     </div>
     <div id="content" class="<?= $page ?>">
