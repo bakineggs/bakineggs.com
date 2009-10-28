@@ -4,6 +4,7 @@ require_once 'functions/db_connect.inc.php';
 db_connect('bakineggs');
 require_once 'blog/entry.php';
 require_once 'blog/comment.php';
+require_once 'vendor/recaptchalib.php';
 
 function render_page($params) {
   if (sizeof($params) > 0 && $_POST['commenting'] == 'true')
@@ -19,20 +20,25 @@ function render_page($params) {
 }
 
 function create_comment($entry, $attributes) {
-  if (Comment::create($entry, $attributes['body'], $attributes['author'], $_SERVER['REMOTE_ADDR']))
+  $recaptcha_response = recaptcha_check_answer($RECAPTCHA_PRIVATE_KEY,
+                                               $_SERVER["REMOTE_ADDR"],
+                                               $attributes["recaptcha_challenge_field"],
+                                               $attributes["recaptcha_response_field"]);
+
+  if ($recaptcha_response->is_valid && Comment::create($entry, $attributes['body'], $attributes['author'], $_SERVER['REMOTE_ADDR']))
     render_entry($entry);
   else
-    render_entry($entry, $attributes);
+    render_entry($entry, $attributes, $recaptcha_response->error);
 }
 
-function render_entry($entry, $comment_attributes = array()) {
+function render_entry($entry, $comment_attributes = array(), $recaptcha_error = null) {
   if (!$entry)
     return render_not_found();
   echo '<div class="entry" id="entry_' . h($entry->id) . '">' . "\n";
   echo '<span class="posted_at">' . h(date('F j, Y @ g:ia', $entry->posted_at)) . '</span>' . "\n";
   echo '<h3>' . h($entry->name) . '</h3>' . "\n";
   echo '<div class="body">' . $entry->body . '</div>' . "\n";
-  render_comments($entry->comments(), $comment_attributes);
+  render_comments($entry->comments(), $comment_attributes, $recaptcha_error);
   echo '</div>' . "\n";
 }
 
@@ -53,7 +59,7 @@ function render_not_found() {
   echo '</div>';
 }
 
-function render_comments($comments, $comment_attributes) {
+function render_comments($comments, $comment_attributes, $recaptcha_error) {
   echo '<h4>Comments</h4>' . "\n";
   echo '<ul class="comments">' . "\n";
   foreach ($comments as $comment)
@@ -65,6 +71,7 @@ function render_comments($comments, $comment_attributes) {
   echo '<label for="comment_author">Name (optional)</label>' . "\n";
   echo '<input id="comment_author" type="text" name="author" value="' . h($comment_attributes['author']) . '">' . "\n";
   echo '<textarea name="body">' . h($comment_attributes['body']) . '</textarea>' . "\n";
+  echo recaptcha_get_html($RECAPTCHA_PUBLIC_KEY, $recaptcha_error);
   echo '<input type="submit" value="Post" />' . "\n";
   echo '</form>';
 }
