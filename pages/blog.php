@@ -19,18 +19,20 @@ function render_page($params) {
 }
 
 function create_comment($entry, $attributes) {
-  Comment::create($entry, $attributes['body'], $attributes['author'], $_SERVER['REMOTE_ADDR']);
-  render_entry($entry);
+  if (Comment::create($entry, $attributes['body'], $attributes['author'], $_SERVER['REMOTE_ADDR']))
+    render_entry($entry);
+  else
+    render_entry($entry, $attributes);
 }
 
-function render_entry($entry) {
+function render_entry($entry, $comment_attributes = array()) {
   if (!$entry)
     return render_not_found();
   echo '<div class="entry" id="entry_' . h($entry->id) . '">' . "\n";
   echo '<span class="posted_at">' . h(date('F j, Y @ g:ia', $entry->posted_at)) . '</span>' . "\n";
   echo '<h3>' . h($entry->name) . '</h3>' . "\n";
   echo '<div class="body">' . $entry->body . '</div>' . "\n";
-  render_comments($entry->comments());
+  render_comments($entry->comments(), $comment_attributes);
   echo '</div>' . "\n";
 }
 
@@ -51,7 +53,7 @@ function render_not_found() {
   echo '</div>';
 }
 
-function render_comments($comments) {
+function render_comments($comments, $comment_attributes) {
   echo '<h4>Comments</h4>' . "\n";
   echo '<ul class="comments">' . "\n";
   foreach ($comments as $comment)
@@ -61,8 +63,8 @@ function render_comments($comments) {
   echo '<form method="post">' . "\n";
   echo '<input type="hidden" name="commenting" value="true" />' . "\n";
   echo '<label for="comment_author">Name (optional)</label>' . "\n";
-  echo '<input id="comment_author" type="text" name="author">' . "\n";
-  echo '<textarea name="body"></textarea>' . "\n";
+  echo '<input id="comment_author" type="text" name="author" value="' . h($comment_attributes['author']) . '">' . "\n";
+  echo '<textarea name="body">' . h($comment_attributes['body']) . '</textarea>' . "\n";
   echo '<input type="submit" value="Post" />' . "\n";
   echo '</form>';
 }
