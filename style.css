@@ -141,6 +141,16 @@ body {
   line-height: 18px;
 }
 
+#content.blog li.entry p, #content.blog li.entry pre {
+  margin-top: .5em;
+  font-size: 105%;
+}
+
+#content.blog div.entry p, #content.blog div.entry pre {
+  margin-top: 1em;
+  font-size: 110%;
+}
+
 #content.projects ul#projects li.project {
   list-style: none;
   padding-top: 20px;
