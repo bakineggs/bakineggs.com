@@ -18,6 +18,14 @@ class Entry {
     return $entries;
   }
 
+  public function comments() {
+    return Comment::find_all_by_entry_id($this->id);
+  }
+
+  public function URI() {
+    return '/Blog/' . urlencode($this->name);
+  }
+
   private static function from_row($row) {
     $posted_at = strtotime($row['posted_at']);
     return new Entry($row['id'], $row['name'], $row['summary'], $row['body'], $posted_at);
