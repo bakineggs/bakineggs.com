@@ -60,11 +60,13 @@ function render_not_found() {
 }
 
 function render_comments($comments, $comment_attributes, $recaptcha_error) {
-  echo '<h4>Comments</h4>' . "\n";
-  echo '<ul class="comments">' . "\n";
-  foreach ($comments as $comment)
-    render_comment($comment);
-  echo '</ul>' . "\n";
+  if (sizeof($comments) > 0) {
+    echo '<h4>Comments</h4>' . "\n";
+    echo '<ul class="comments">' . "\n";
+    foreach ($comments as $comment)
+      render_comment($comment);
+    echo '</ul>' . "\n";
+  }
   echo '<h4>Post Comment</h4>' . "\n";
   echo '<form method="post">' . "\n";
   echo '<input type="hidden" name="commenting" value="true" />' . "\n";
@@ -79,7 +81,7 @@ function render_comments($comments, $comment_attributes, $recaptcha_error) {
 function render_comment($comment) {
   echo '<li class="comment" id="comment_' . h($comment->id) . '">'. "\n";
   if ($comment->author)
-    echo '<span class="author">' . h($comment->author) . '</span> said on ';
+    echo '<span class="author">' . h($comment->author) . '</span><span class="said_on">&nbsp;said on&nbsp;</span>';
   echo '<span class="posted_at">' . h(date('F j, Y @ g:ia', $comment->posted_at)) . '</span>' . "\n";
   echo '<div class="body">' . h($comment->body) . '</div>';
   echo '</li>' . "\n";

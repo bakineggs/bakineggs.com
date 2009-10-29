@@ -109,6 +109,11 @@ body {
   text-decoration: none;
 }
 
+#content h4 {
+  color: #444;
+  font-size: 20px;
+}
+
 #content a {
   color: #000;
 }
@@ -126,7 +131,11 @@ body {
   padding-top: 0px;
 }
 
-#content.blog .entry .posted_at {
+#content.blog .entry h4 {
+  margin: 1em 0 .5em;
+}
+
+#content.blog .entry .posted_at, #content.blog .entry .author, #content.blog .entry .said_on {
   display: block;
   font-size: 12px;
   color: #5e5e5e;
@@ -135,6 +144,10 @@ body {
   padding-bottom: 3px;
   margin-bottom: 3px;
   border-bottom: 1px solid #f2f2f2;
+}
+
+#content.blog .entry .author, #content.blog .entry .said_on {
+  float: left;
 }
 
 #content.blog .entry .body {
@@ -149,6 +162,22 @@ body {
 #content.blog div.entry p, #content.blog div.entry pre {
   margin-top: 1em;
   font-size: 110%;
+}
+
+#content.blog .entry ul.comments li.comment {
+  list-style: none;
+  padding: 15px 0 10px;
+}
+
+#content.blog .entry ul.comments li.comment:first-child {
+  padding-top: 0px;
+}
+
+#content.blog .entry form textarea {
+  margin: 5px 0;
+  height: 5em;
+  width: 30em;
+  display: block;
 }
 
 #content.projects ul#projects li.project {
