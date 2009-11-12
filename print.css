@@ -29,3 +29,19 @@ a {
   margin-left: 200px;
   line-height: 24px;
 }
+
+#content.resume dl#education dd ul.courses, #content.resume dl#education dd ul.courses li {
+  display: inline;
+}
+
+#content.resume dl#education dd ul.courses li .link {
+  display: none;
+}
+
+#content.resume dl#education dd ul.courses li::after {
+  content: ",";
+}
+
+#content.resume dl#education dd ul.courses li:last-child::after {
+  content: "";
+}
