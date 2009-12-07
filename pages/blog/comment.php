@@ -5,16 +5,16 @@ class Comment {
   public static function create($entry, $body, $author, $author_ip) {
     if (!$entry->id || !trim($body))
       return null;
-    $result = mysql_query("insert into comments (entry_id, body, author, author_ip) values ('" . mesc($entry->id) ."', '" . mesc($body) ."', '" . mesc($author) ."', '" . mesc($author_ip) ."')");
-    if (!($id = mysql_insert_id()))
+    $result = pg_query("insert into comments (entry_id, body, author, author_ip) values ('" . pesc($entry->id) ."', '" . pesc($body) ."', '" . pesc($author) ."', '" . pesc($author_ip) ."')");
+    if (!($id = pg_last_oid($result)))
       return null;
-    return self::from_row(mysql_query("select * from comments where id = '" . mesc($id) . "'"));
+    return self::from_row(pg_query("select * from comments where id = '" . pesc($id) . "'"));
   }
 
   public static function find_all_by_entry_id($entry_id) {
-    $result = mysql_query("select * from comments where entry_id = '" . mesc($entry_id) . "' order by posted_at desc");
+    $result = pg_query("select * from comments where entry_id = '" . pesc($entry_id) . "' order by posted_at desc");
     $entries = array();
-    while ($row = mysql_fetch_assoc($result))
+    while ($row = pg_fetch_assoc($result))
       array_push($entries, self::from_row($row));
     return $entries;
   }

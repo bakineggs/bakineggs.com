@@ -1,7 +1,11 @@
 <?php
-require_once 'functions/util.inc.php';
-require_once 'functions/db_connect.inc.php';
-db_connect('bakineggs');
+require_once 'secrets.inc.php'; // define()'s DB_PASSWORD, RECPATCHA_PRIVATE_KEY, RECAPTCHA_PUBLIC_KEY
+
+pg_connect('dbname=bakineggs user=bakineggs password=' . DB_PASSWORD);
+
+function h($str) { return htmlentities($str, ENT_QUOTES); }
+function pesc($str) { return pg_escape_string($str); }
+
 require_once 'blog/entry.php';
 require_once 'blog/comment.php';
 require_once 'vendor/recaptchalib.php';
@@ -20,7 +24,7 @@ function render_page($params) {
 }
 
 function create_comment($entry, $attributes) {
-  $recaptcha_response = recaptcha_check_answer($RECAPTCHA_PRIVATE_KEY,
+  $recaptcha_response = recaptcha_check_answer(RECAPTCHA_PRIVATE_KEY,
                                                $_SERVER["REMOTE_ADDR"],
                                                $attributes["recaptcha_challenge_field"],
                                                $attributes["recaptcha_response_field"]);
@@ -73,7 +77,7 @@ function render_comments($comments, $comment_attributes, $recaptcha_error) {
   echo '<label for="comment_author">Name (optional)</label>' . "\n";
   echo '<input id="comment_author" type="text" name="author" value="' . h($comment_attributes['author']) . '">' . "\n";
   echo '<textarea name="body">' . h($comment_attributes['body']) . '</textarea>' . "\n";
-  echo recaptcha_get_html($RECAPTCHA_PUBLIC_KEY, $recaptcha_error);
+  echo recaptcha_get_html(RECAPTCHA_PUBLIC_KEY, $recaptcha_error);
   echo '<input type="submit" value="Post" />' . "\n";
   echo '</form>';
 }

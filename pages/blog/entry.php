@@ -3,17 +3,17 @@ class Entry {
   public $id, $name, $body, $summary, $posted_at;
 
   public static function find_by_name($name) {
-    $result = mysql_query("select * from entries where name='" . mesc($name) . "'");
-    if ($row = mysql_fetch_assoc($result))
+    $result = pg_query("select * from entries where name='" . pesc($name) . "'");
+    if ($row = pg_fetch_assoc($result))
       return self::from_row($row);
     else
       return null;
   }
 
   public static function find_all() {
-    $result = mysql_query('select * from entries order by posted_at desc');
+    $result = pg_query('select * from entries order by posted_at desc');
     $entries = array();
-    while ($row = mysql_fetch_assoc($result))
+    while ($row = pg_fetch_assoc($result))
       $entries[] = self::from_row($row);
     return $entries;
   }
