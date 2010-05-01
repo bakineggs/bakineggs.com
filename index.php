@@ -1,7 +1,8 @@
 <?php
 $TAGLINES = array(
   'one spec at a time',
-  'least surprising surprise'
+  'least surprising surprise',
+  'rubies rock your rails'
 );
 shuffle($TAGLINES);
 $tagline = $TAGLINES[0];
