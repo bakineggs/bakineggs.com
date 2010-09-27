@@ -76,15 +76,15 @@ echo '<?xml version="1.0" encoding="utf-8" ?>';
       <div id="about">
         <p>
           My name is Dan Barry.
-          I'm a senior in Computer Science at <a href="http://illinois.edu">The University of Illinois at Urbana-Champaign</a>.
+          I'm a student at <a href="http://illinois.edu">The University of Illinois at Urbana-Champaign</a>. I'll be graduating with a Bachelor's in Computer Science in December.
         </p>
         <p>
-          I've been programming for over ten years now.
-          Most recently, I've been programming in <a href="http://ruby-lang.org">Ruby</a> and using the <a href="http://rubyonrails.org">Rails</a> framework.
-          I'm also proficient in <a href="http://php.net">PHP</a> and JavaScript.
+          I've been a programming enthusiast for over ten years now.
+          Professionally, I've been developing software using <a href="http://rubyonrails.org">Ruby on Rails</a>.
+          For fun, I use <a href="http://ruby-lang.org">Ruby</a>, C, JavaScript, and <a href="http://code.google.com/p/k-framework">k-framework</a>.
         </p>
         <p>
-          I'm currently living in San Francisco, California where I am an intern at <a href="http://www.scribd.com">Scribd</a>.
+          In January I'll be moving to San Francisco, California where I'll be working as a software engineer at <a href="http://www.scribd.com">Scribd</a>.
         </p>
       </div>
     </div>
