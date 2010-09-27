@@ -79,8 +79,8 @@ echo '<?xml version="1.0" encoding="utf-8" ?>';
           I'm a student at <a href="http://illinois.edu">The University of Illinois at Urbana-Champaign</a>. I'll be graduating with a Bachelor's in Computer Science in December.
         </p>
         <p>
-          I've been a programming enthusiast for over ten years now.
-          Professionally, I've been developing software using <a href="http://rubyonrails.org">Ruby on Rails</a>.
+          I've been programming for over ten years now.
+          Professionally, I've been using <a href="http://rubyonrails.org">Ruby on Rails</a>.
           For fun, I use <a href="http://ruby-lang.org">Ruby</a>, C, JavaScript, and <a href="http://code.google.com/p/k-framework">k-framework</a>.
         </p>
         <p>
