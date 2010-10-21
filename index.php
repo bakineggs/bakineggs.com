@@ -108,7 +108,7 @@ echo '<?xml version="1.0" encoding="utf-8" ?>';
     </div>
     <div id="credits">
       <p>
-        &copy; 2008-<?= date('Y') ?> Dan Barry. Designed by <a href="http://hunterhastings.net">Hunter Hastings</a>.
+        &copy; 2008-<?= date('Y') ?> Dan Barry. Designed by <a href="http://extramoose.com">Hunter Hastings</a>.
       </p>
     </div>
   </body>
