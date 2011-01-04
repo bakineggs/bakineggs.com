@@ -18,7 +18,7 @@ function render_page($params) {
   else {
     echo '<ul id="entries">';
     foreach (Entry::find_all() as $entry)
-      render_summary($entry, true);
+      render_summary($entry);
     echo '</ul>';
   }
 }
