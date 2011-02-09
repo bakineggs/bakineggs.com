@@ -52,7 +52,9 @@ function render_summary($entry) {
   echo '<li class="entry summary" id="entry_' . h($entry->id) . '">' . "\n";
   echo '<span class="posted_at">' . h(date('F j, Y @ g:ia', $entry->posted_at)) . '</span>' . "\n";
   echo '<h3><a href="' . $entry->URI() . '">' . h($entry->name) . '</a></h3>' . "\n";
-  echo '<div class="body">' . $entry->summary . '</div>' . "\n";
+  echo '<div class="summary">' . $entry->summary . '</div>' . "\n";
+  if ($entry->summary != $entry->body)
+    echo '<p class="continued"><a href="' . $entry->URI() . '">Continued...</a></p>';
   echo '</li>' . "\n";
 }
 
