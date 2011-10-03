@@ -80,10 +80,10 @@ echo '<?xml version="1.0" encoding="utf-8" ?>';
         </p>
         <p>
           Professionally, I've been developing web applications using <a href="http://rubyonrails.org">Ruby on Rails</a>.
-          For fun, I use <a href="http://ruby-lang.org">Ruby</a>, C, JavaScript, and <a href="http://code.google.com/p/k-framework">k-framework</a>.
+          For fun, I'm writing a language called <a href="http://github.com/bakineggs/okk">okk</a>.
         </p>
         <p>
-          I'm currently living in San Francisco, California where I work as a software engineer at <a href="http://www.scribd.com">Scribd</a>.
+          I'm currently living in San Francisco, California where I work as a software engineer at <a href="http://squareup.com">Square</a>.
         </p>
       </div>
     </div>
