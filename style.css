@@ -73,7 +73,9 @@ body {
 }
 
 #meta #about p {
-  margin: 5px 0px;
+  margin: 10px 0px;
+  font-size: 120%;
+  letter-spacing: 2pt;
 }
 
 #meta #about p:first-child {

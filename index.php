@@ -74,17 +74,7 @@ echo '<?xml version="1.0" encoding="utf-8" ?>';
         <?= $tagline ?>
       </span>
       <div id="about">
-        <p>
-          My name is Dan Barry.
-          I've been a programming enthusiast for over ten years now.
-        </p>
-        <p>
-          Professionally, I've been developing web applications using <a href="http://rubyonrails.org">Ruby on Rails</a>.
-          For fun, I'm writing a language called <a href="http://github.com/bakineggs/okk">okk</a>.
-        </p>
-        <p>
-          I'm currently living in San Francisco, California where I work as a software engineer at <a href="http://squareup.com">Square</a>.
-        </p>
+        <?php render_static_page('about'); ?>
       </div>
     </div>
     <div id="content" class="<?= $page ?>">
