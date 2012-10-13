@@ -9,7 +9,6 @@ $tagline = $TAGLINES[0];
 
 $PAGES = array(
   'projects' => 'My Projects',
-  'contributions' => 'Contributions to Other Projects',
   'resume' => 'Resum&eacute;',
   'blog' => 'Blog',
   'error404' => 'Error 404'
@@ -18,7 +17,6 @@ $PAGES = array(
 $NAVIGATION_PAGES = array(
   'blog' => 'Blog',
   'projects' => 'My Projects',
-  'contributions' => 'Contributions',
   'resume' => 'Resum&eacute;'
 );
 
