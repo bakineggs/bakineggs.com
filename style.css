@@ -3,6 +3,10 @@
   padding: 0;
 }
 
+ul, ol {
+  list-style-position: inside;
+}
+
 pre, code {
   background-color: #f8f8ff;
   border: 1px solid #ddd;
@@ -218,7 +222,6 @@ body {
 }
 
 #content.resume dl dd ul {
-  list-style-position: inside;
   padding-left: 5px;
 }
 
