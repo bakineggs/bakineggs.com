@@ -1,5 +1,6 @@
 <?php
 $TAGLINES = array(
+  'the eggs are never done',
   'one spec at a time',
   'least surprising surprise',
   'rubies rock your rails'
